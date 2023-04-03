@@ -25,6 +25,7 @@ export function Home () {
           reward of the cloud, and make security integral to your busines
         </Description>
       </TitleContainer>
+
       <GartnerBanner>
         <GartnerBannerContainer>
           <GartnerLogo />

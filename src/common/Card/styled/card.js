@@ -4,8 +4,8 @@ export const Container = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${({ theme }) => theme.colors.lightGrey};
-  border-radius: 5px;
+  border: 2px solid ${({ theme }) => theme.colors.lightGrey};
+  border-radius: 8px;
   padding: 25px;
   flex-direction: column;
 `

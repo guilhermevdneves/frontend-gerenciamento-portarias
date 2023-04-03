@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.header`
   background: ${({ theme }) => theme.colors.primaryGradient};
   padding: 15px 0;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
 `

@@ -17,6 +17,10 @@ export const Modal = styled.div`
   background-color: #fff;
   border-radius: 5px;
   padding: 25px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 export const ModalTitle = styled.h2`
@@ -65,4 +69,8 @@ export const Input = styled.input.attrs(props => ({
   font-size: 16px;
   min-width: 400px;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 `

@@ -1,11 +1,17 @@
 import styled from 'styled-components'
 import dots from '../../../assets/images/dots.png'
+
 export const Container = styled.section`
   display: flex;
   align-items: center;
-  width: 100%;
   padding: 15px;
+  width: 100%;
   border-bottom: 2px solid ${({ theme }) => theme.colors.lightGrey};
+
+  @media (max-width: 768px) {
+    flex: 1;
+    width: unset;
+  }
 `
 
 export const ContactInfo = styled.div`

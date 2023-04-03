@@ -15,6 +15,10 @@ export const TitleContainer = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   padding: 95px 0;
+
+  @media (max-width: 800px) {
+    margin: 0 15px;
+  }
 `
 export const GartnerBanner = styled.div`
   display: flex;
@@ -50,6 +54,7 @@ export const CardContainer = styled.div`
 
   @media (max-width: 768px) {
     max-width: 100%;
+    grid-template-columns: repeat(1, 1fr);
   }
 `
 
@@ -60,17 +65,32 @@ export const GartnerBannerContainer = styled.div`
   align-items: center;
   margin: auto;
   width: 70%;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+    width: 90%;
+  }
 `
 
 export const GartnerLogo = styled.img.attrs({
   src: gLogo
 })`
   margin: 0;
+
+  @media (max-width: 1000px) {
+    margin-bottom: 10px;
+  }
 `
 
 export const GartnerText = styled.p`
   font-weight: 500;
   font-size: 16px;
+
+  @media (max-width: 1000px) {
+    margin-bottom: 10px;
+  }
 `
 export const GartnerLink = styled.a`
   font-size: 16px;

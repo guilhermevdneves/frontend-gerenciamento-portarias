@@ -6,7 +6,7 @@ export const Container = styled.div`
   max-width: 80%;
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    max-width: 90%;
   }
 `
 
@@ -41,6 +41,10 @@ export const ContactsContainer = styled.div`
   flex-direction: column;
   align-items: flex-end;
   padding-top: 25px;
+
+  @media (max-width: 768px) {
+    align-items: unset;
+  }
 `
 
 export const BackButton = styled(Link).attrs({
