@@ -15,7 +15,10 @@ export const Title = styled.h2`
   font-weight: 500;
 `
 export const ContentContainer = styled.div`
+  display: flex;
+  justify-content: center;
   margin: 15px 0;
+  width: 100%;
 `
 
 export const Bar = styled.div`

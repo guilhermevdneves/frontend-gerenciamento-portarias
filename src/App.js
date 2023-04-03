@@ -1,6 +1,7 @@
 import React from 'react'
 import { Home } from './routes/Home/components/Home'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Contacts } from './routes/Contacts/components/Contacts'
 
 const router = createBrowserRouter([
   {
@@ -9,13 +10,13 @@ const router = createBrowserRouter([
   },
   {
     path: '/contacts',
-    element: <div>aoisndnaiodsnioan</div>
+    element: <Contacts />
   }
 ])
 
 function App () {
   return (
-    <div className='App'>
+    <div style={{ height: '100%' }} className='App'>
       <RouterProvider router={router} />
     </div>
   )

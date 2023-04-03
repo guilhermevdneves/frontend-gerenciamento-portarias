@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const Container = styled(Link).attrs({
-  to: '/contacts'
-})`
+export const Container = styled(Link).attrs(({ disabled }) =>
+  disabled ? {} : { to: '/contacts' }
+)`
   color: white;
   background: ${props =>
     props.disabled
@@ -16,6 +16,6 @@ export const Container = styled(Link).attrs({
   font-size: 16px
 
   &:hover {
-    cursor: ${props => (props.disabled ? 'none' : 'pointer')};
+    cursor: ${props => (props.disabled ? 'unset' : 'pointer')};
   }
 `

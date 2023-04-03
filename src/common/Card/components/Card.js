@@ -14,7 +14,7 @@ export function Card ({ title, content, disabled = false }) {
       <Title>{title}</Title>
 
       <Bar color={'red'} />
-      <ContentContainer></ContentContainer>
+      <ContentContainer>{content}</ContentContainer>
 
       <Bar color={'#5514b4'} />
       <ButtonContainer>
