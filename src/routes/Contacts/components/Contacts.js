@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Container,
   TitleContainer,
@@ -11,13 +11,55 @@ import {
 import { SecondaryButton } from '../../../common/SecondaryButton/components/SecondaryButton'
 import { ContactsModal } from '../../../common/ContactsModal/components/ContactsModal'
 import { ContactCard } from '../../../common/ContactCard/components/ContactCard'
+import { api } from '../../../services/api'
+import { isContactValid } from '../../../utils/checkIfContactIsValid'
 
 export function Contacts () {
-  const [contacts, setContacts] = useState([
-    { id: 1, name: 'Name a', number: '(19) 992229179' },
-    { id: 2, name: 'Name b', number: '(11) 959567370' }
-  ])
+  const [contacts, setContacts] = useState([])
+
   const [openAddContactModal, setOpenAddContactModal] = useState(false)
+
+  const handleFetchContacts = async () => {
+    try {
+      const response = await api.get('/contacts')
+
+      setContacts(response.data)
+    } catch (err) {
+      alert('Error!')
+    }
+  }
+
+  const handleAddContact = async e => {
+    try {
+      e.preventDefault()
+      const name = e.target[0].value
+      const number = e.target[1].value
+
+      const newContact = {
+        number,
+        name
+      }
+      console.log(isContactValid(newContact))
+
+      if (isContactValid(newContact)) {
+        await api.post('/contact', {
+          name,
+          number
+        })
+
+        handleFetchContacts()
+        setOpenAddContactModal(false)
+      } else {
+        alert('contact is invalid!')
+      }
+    } catch (err) {
+      console.log('err', err)
+    }
+  }
+
+  useEffect(() => {
+    handleFetchContacts()
+  }, [])
 
   return (
     <Container>
@@ -41,14 +83,18 @@ export function Contacts () {
             title='Add new contact'
           />
           {contacts.map(contact => (
-            <ContactCard contact={contact} key={contact.id} />
+            <ContactCard
+              handleFetchContacts={handleFetchContacts}
+              contact={contact}
+              key={contact.id}
+            />
           ))}
         </ContactsContainer>
       )}
 
       {openAddContactModal && (
         <ContactsModal
-          onSubmit={() => alert('Adding')}
+          onSubmit={e => handleAddContact(e)}
           onClose={() => setOpenAddContactModal(false)}
           title='Add new contact'
           buttonName='Add contact'

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Container,
   Title,
@@ -13,8 +13,24 @@ import {
 } from '../styled/home'
 import { Card } from '../../../common/Card/components/Card'
 import { CardContent } from '../../../common/CardContent/components/CardContent'
+import { api } from '../../../services/api'
 
 export function Home () {
+  const [numberOfContacts, setNumberOfContacts] = useState(0)
+  const handleFetch = async () => {
+    try {
+      const response = await api.get('/contacts')
+
+      setNumberOfContacts(response.data.length)
+    } catch (err) {
+      console.log('err', err)
+    }
+  }
+
+  useEffect(() => {
+    handleFetch()
+  }, [])
+
   return (
     <Container>
       <TitleContainer>
@@ -39,7 +55,12 @@ export function Home () {
       <CardContainer>
         <Card
           title='Contacts'
-          content={<CardContent description='Number of contacts' status='2' />}
+          content={
+            <CardContent
+              description='Number of contacts'
+              status={numberOfContacts}
+            />
+          }
         />
         <Card
           title='Incoming calls'
