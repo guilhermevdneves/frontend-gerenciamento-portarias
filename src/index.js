@@ -5,6 +5,7 @@ import App from './App'
 import { Theme } from './assets/theme/Theme'
 import { Header } from './common/Header/components/Header'
 import { Footer } from './common/Footer/components/Footer'
+import { AuthContextProvider } from './context/authContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -14,7 +15,9 @@ root.render(
 
       <Header />
 
-      <App />
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
 
       <Footer />
     </Theme>

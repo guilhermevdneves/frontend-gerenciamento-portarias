@@ -14,12 +14,17 @@ import {
 import { Card } from '../../../common/Card/components/Card'
 import { CardContent } from '../../../common/CardContent/components/CardContent'
 import { api } from '../../../services/api'
+import { useAuthContext } from '../../../context/authContext'
 
 export function Home () {
   const [numberOfContacts, setNumberOfContacts] = useState(0)
+  const { authToken } = useAuthContext()
+
   const handleFetch = async () => {
     try {
-      const response = await api.get('/contacts')
+      const response = await api.get('/contacts', {
+        headers: { Authorization: authToken }
+      })
 
       setNumberOfContacts(response.data.length)
     } catch (err) {

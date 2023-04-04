@@ -13,15 +13,18 @@ import { ContactsModal } from '../../../common/ContactsModal/components/Contacts
 import { ContactCard } from '../../../common/ContactCard/components/ContactCard'
 import { api } from '../../../services/api'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
+import { useAuthContext } from '../../../context/authContext'
 
 export function Contacts () {
   const [contacts, setContacts] = useState([])
-
   const [openAddContactModal, setOpenAddContactModal] = useState(false)
+  const { authToken } = useAuthContext()
 
   const handleFetchContacts = async () => {
     try {
-      const response = await api.get('/contacts')
+      const response = await api.get('/contacts', {
+        headers: { Authorization: authToken }
+      })
 
       setContacts(response.data)
     } catch (err) {
@@ -42,10 +45,16 @@ export function Contacts () {
       console.log(isContactValid(newContact))
 
       if (isContactValid(newContact)) {
-        await api.post('/contact', {
-          name,
-          number
-        })
+        await api.post(
+          '/contact',
+          {
+            name,
+            number
+          },
+          {
+            headers: { Authorization: authToken }
+          }
+        )
 
         handleFetchContacts()
         setOpenAddContactModal(false)

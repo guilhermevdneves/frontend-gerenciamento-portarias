@@ -15,15 +15,19 @@ import ClickAwayListener from 'react-click-away-listener'
 import { ContactsModal } from '../../ContactsModal/components/ContactsModal'
 import { api } from '../../../services/api'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
+import { useAuthContext } from '../../../context/authContext'
 
 export function ContactCard ({ contact, handleFetchContacts }) {
   const [showOptions, setShowOptions] = useState(false)
   const [openEditContactModal, setOpenEditContactModal] = useState(false)
+  const { authToken } = useAuthContext()
 
   const handleDelete = async () => {
     const id = contact.id
 
-    await api.delete(`/contacts/${id}`)
+    await api.delete(`/contacts/${id}`, {
+      headers: { Authorization: authToken }
+    })
 
     handleFetchContacts()
   }
@@ -39,12 +43,18 @@ export function ContactCard ({ contact, handleFetchContacts }) {
         number,
         name
       }
-      console.log(isContactValid(newContact))
+
       if (isContactValid(newContact)) {
-        await api.put(`/contacts/${id}`, {
-          name,
-          number
-        })
+        await api.put(
+          `/contacts/${id}`,
+          {
+            name,
+            number
+          },
+          {
+            headers: { Authorization: authToken }
+          }
+        )
 
         handleFetchContacts()
         setOpenEditContactModal(false)
