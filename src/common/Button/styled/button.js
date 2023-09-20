@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const Container = styled(Link).attrs(({ disabled }) =>
-  disabled ? {} : { to: '/contacts' }
+export const Container = styled(Link).attrs(({ disabled, numberselected = '' }) =>
+  disabled ? {} : { to: `/numbers/${numberselected}/contacts` }
 )`
   color: white;
   background: ${props =>

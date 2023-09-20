@@ -1,18 +1,25 @@
 import styled from 'styled-components'
 
+
 export const Container = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 10fr 0.3fr;
   border: 2px solid ${({ theme }) => theme.colors.lightGrey};
   border-radius: 8px;
-  padding: 25px;
-  flex-direction: column;
+  background-color: #FAFAF5;
 `
-export const Title = styled.h2`
+export const Title = styled.h1`
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: bold;
+`
+
+export const ConteudoTexto = styled.p`
   font-size: 18px;
   margin-bottom: 15px;
   font-weight: 500;
+  color: ${props => props.cor || 'black'};
+  font-weight: ${props => props.cor ? 700 : 500} 
 `
 export const ContentContainer = styled.div`
   display: flex;
@@ -20,12 +27,31 @@ export const ContentContainer = styled.div`
   margin: 15px 0;
   width: 100%;
 `
-
-export const Bar = styled.div`
-  border: 1px solid ${props => props.color};
-  border-radius: 5px;
+export const LabelSituaçao = styled.div`
+  height: 100%;
+  background-color: red;
   width: 100%;
+  border-radius: 0px 8px 8px 0px;
+  background-color: ${props => props.cor || 'black'};
 `
-export const ButtonContainer = styled.div`
-  margin-top: 15px;
+
+export const ImagemPortaria = styled.img`
+`
+
+export const BotaoPortaria = styled.a`
+  background-color: transparent;
+`
+
+export const ContainerInfo = styled.div`
+  padding: 25px;
+`
+
+export const ContainerPortaria = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+`
+
+export const ContainerTitulo = styled.div`
 `

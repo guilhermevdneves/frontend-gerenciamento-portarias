@@ -18,12 +18,19 @@ export const ContactInfo = styled.div`
   width: 100%;
 `
 
-export const ContactName = styled.p`
+export const ContactName = styled.h1`
   font-size: 22px;
   margin-bottom: 8px;
 `
-export const ContactNumber = styled.p`
+export const ContactNumber = styled.h2`
   font-size: 18px;
+`
+
+export const ContactEmail = styled.h3`
+  margin-top: 5px;
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.lightGrey};
+ 
 `
 
 export const OptionsDots = styled.button`
@@ -68,3 +75,6 @@ export const Option = styled.button`
     cursor: pointer;
   }
 `
+
+
+

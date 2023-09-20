@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import logo from '../../../assets/images/btLogo.png'
+import logo from '../../../assets/images/logo-ifsp.png'
 
 export const Container = styled.header`
   border-bottom: 2px solid rgb(224, 224, 224, 0.6);
-  background: ${({ theme }) => theme.colors.primaryGradient};
+  background: ${({ theme }) => theme.colors.primary};
   display: flex;
   align-items: center;
   font-weight: 400 !important;

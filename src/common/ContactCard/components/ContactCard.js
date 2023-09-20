@@ -9,57 +9,51 @@ import {
   OptionsModal,
   OptionsModalContainer,
   Option,
-  OptionsDots
+  OptionsDots,
+  ContactEmail
 } from '../styled/contactCard'
 import ClickAwayListener from 'react-click-away-listener'
 import { ContactsModal } from '../../ContactsModal/components/ContactsModal'
-import { api } from '../../../services/api'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'
+import { useParams } from 'react-router-dom'
+import { deleteContact, editContact } from '../../../services/contacts'
+import { formatContactFromEvent } from '../../../utils/formatContactFromEvent'
 
-export function ContactCard ({ contact, handleFetchContacts }) {
+export function ContactCard({ contact, handleFetchContacts }) {
   const [showOptions, setShowOptions] = useState(false)
   const [openEditContactModal, setOpenEditContactModal] = useState(false)
   const { authToken } = useAuthContext()
+  const { number: selectedNumber } = useParams();
 
   const handleDelete = async () => {
-    const id = contact.id
+    try {
+      const id = contact.id
 
-    await api.delete(`/contacts/${id}`, {
-      headers: { Authorization: authToken }
-    })
+      await deleteContact(authToken, selectedNumber, id);
 
-    handleFetchContacts()
+      handleFetchContacts()
+    } catch (err) {
+      console.log('err', err)
+    }
   }
 
   const handleEdit = async e => {
     try {
       e.preventDefault()
       const id = contact.id
-      const name = e.target[0].value
-      const number = e.target[1].value
 
-      const newContact = {
-        number,
-        name
-      }
+      const newContact = formatContactFromEvent(e, id);
 
-      if (isContactValid(newContact)) {
-        await api.put(
-          `/contacts/${id}`,
-          {
-            name,
-            number
-          },
-          {
-            headers: { Authorization: authToken }
-          }
-        )
+      const isValid = await isContactValid(newContact);
+
+      if (!isValid.errorMessage) {
+        await editContact(authToken, selectedNumber, newContact);
 
         handleFetchContacts()
         setOpenEditContactModal(false)
       } else {
-        alert('contact is invalid!')
+        alert(isValid.errorMessage)
       }
     } catch (err) {
       console.log('err', err)
@@ -70,9 +64,19 @@ export function ContactCard ({ contact, handleFetchContacts }) {
     <Container>
       <ContactInfo>
         <ContactName>
+        
           {contact.name ? contact.name : contact.number}
         </ContactName>
+        
         <ContactNumber>{contact.number}</ContactNumber>
+
+
+        {contact.email &&
+          <ContactEmail>
+            {contact.email}
+          </ContactEmail>
+        }
+
       </ContactInfo>
 
       <OptionsDots onClick={() => setShowOptions(true)} />

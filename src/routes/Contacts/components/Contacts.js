@@ -11,20 +11,22 @@ import {
 import { SecondaryButton } from '../../../common/SecondaryButton/components/SecondaryButton'
 import { ContactsModal } from '../../../common/ContactsModal/components/ContactsModal'
 import { ContactCard } from '../../../common/ContactCard/components/ContactCard'
-import { api } from '../../../services/api'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'
+import {  useParams } from 'react-router-dom';
+import { addContact, getContacts } from '../../../services/contacts'
+import { formatContactFromEvent } from '../../../utils/formatContactFromEvent'
 
 export function Contacts () {
   const [contacts, setContacts] = useState([])
   const [openAddContactModal, setOpenAddContactModal] = useState(false)
   const { authToken } = useAuthContext()
 
+  const {number: selectedNumber} = useParams();
+
   const handleFetchContacts = async () => {
     try {
-      const response = await api.get('/contacts', {
-        headers: { Authorization: authToken }
-      })
+      const response = await getContacts(authToken, selectedNumber);
 
       setContacts(response.data)
     } catch (err) {
@@ -35,31 +37,17 @@ export function Contacts () {
   const handleAddContact = async e => {
     try {
       e.preventDefault()
-      const name = e.target[0].value
-      const number = e.target[1].value
 
-      const newContact = {
-        number,
-        name
-      }
-      console.log(isContactValid(newContact))
-
-      if (isContactValid(newContact)) {
-        await api.post(
-          '/contact',
-          {
-            name,
-            number
-          },
-          {
-            headers: { Authorization: authToken }
-          }
-        )
+      const newContact = formatContactFromEvent(e)
+      const isValid = await isContactValid(newContact);
+      
+      if (!isValid.errorMessage) {
+        await addContact(authToken, selectedNumber, newContact);
 
         handleFetchContacts()
         setOpenAddContactModal(false)
       } else {
-        alert('contact is invalid!')
+        alert(isValid.errorMessage)
       }
     } catch (err) {
       console.log('err', err)

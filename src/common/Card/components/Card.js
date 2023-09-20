@@ -2,24 +2,44 @@ import React from 'react'
 import {
   Container,
   Title,
-  Bar,
-  ButtonContainer,
-  ContentContainer
-} from '../styled/card'
-import { Button } from '../../Button/components/Button'
+  LabelSituaçao,
+  ImagemPortaria,
+  BotaoPortaria,
+  ContainerPortaria,
+  ContainerInfo,
+  ContainerTitulo,
+  ConteudoTexto
+} from '../styled/card';
 
-export function Card ({ title, content, disabled = false }) {
+import portariaImg from '../../../assets/images/portariaImg.png';
+import { situacaoPortaria } from '../../../constants/situacaoPortaria';
+
+export function Card ({ dadosPortaria }) {
+
   return (
     <Container>
-      <Title>{title}</Title>
+      <ContainerPortaria>
+        <BotaoPortaria href={dadosPortaria.linkPortaria}>
+          <ImagemPortaria src={portariaImg} />
+        </BotaoPortaria>
+      </ContainerPortaria>
+  
+      <ContainerInfo>
+        <ContainerTitulo>
+          <Title>{`${dadosPortaria.numero} - ${dadosPortaria.assunto}`}</Title>
+        </ContainerTitulo>
 
-      <Bar color={'red'} />
-      <ContentContainer>{content}</ContentContainer>
+         <ConteudoTexto cor={situacaoPortaria[dadosPortaria.situacao].color}>{dadosPortaria.situacao}</ConteudoTexto>
 
-      <Bar color={'#5514b4'} />
-      <ButtonContainer>
-        <Button title='Manage' disabled={disabled} />
-      </ButtonContainer>
+
+          <ConteudoTexto>
+            {`Data: ${dadosPortaria.publicacao} Val: ${dadosPortaria.validade}`}
+         </ConteudoTexto>
+
+          <ConteudoTexto>{dadosPortaria.numero}</ConteudoTexto>
+      </ContainerInfo>
+           
+      <LabelSituaçao cor={situacaoPortaria[dadosPortaria.situacao].color} />
     </Container>
   )
 }

@@ -45,7 +45,7 @@ export const Title = styled.h1`
 `
 export const CardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-column-gap: 35px;
   grid-row-gap: 25px;
   margin: auto;
@@ -99,4 +99,31 @@ export const GartnerLink = styled.a`
   &:hover {
     cursor: pointer;
   }
+`
+
+export const NumbersTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.lightGrey};
+`
+export const NumbersTitle = styled.h1`
+  font-size: 30px;
+  font-weight: 500;
+`
+
+export const NumbersContainer = styled.div`
+  margin: auto;
+  margin-top: 50px;
+  max-width: 80%;
+
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
+`
+
+export const NumbersDropdown = styled.select`
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid ${({ theme }) => theme.colors.lightGrey};
 `

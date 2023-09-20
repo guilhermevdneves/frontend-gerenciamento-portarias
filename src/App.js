@@ -3,7 +3,10 @@ import { Home } from './routes/Home/components/Home'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Contacts } from './routes/Contacts/components/Contacts'
 import { Login } from './routes/Login/components/Login'
-import { useAuthContext } from './context/authContext'
+import { useAuthContext } from './context/authContext';
+import { StyleRouter } from './styled'
+import { UNAUTHENTICATED } from './constants/unauthenticated'
+
 
 const Authenticatedroutes = createBrowserRouter([
   {
@@ -11,7 +14,7 @@ const Authenticatedroutes = createBrowserRouter([
     element: <Home />
   },
   {
-    path: '/contacts',
+    path: 'numbers/:number/contacts',
     element: <Contacts />
   }
 ])
@@ -25,10 +28,12 @@ const routes = createBrowserRouter([
 
 function App () {
   const { authToken } = useAuthContext()
-
   return (
-    <div style={{ height: '100%' }} className='App'>
-      <RouterProvider router={!authToken ? routes : Authenticatedroutes} />
+    <div className='App'>
+      <StyleRouter>
+        <RouterProvider router={(
+          authToken && (authToken.token || authToken === UNAUTHENTICATED ))   ? Authenticatedroutes : routes} />
+      </StyleRouter>
     </div>
   )
 }

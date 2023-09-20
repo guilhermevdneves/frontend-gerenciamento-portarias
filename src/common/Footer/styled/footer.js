@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.header`
-  background: ${({ theme }) => theme.colors.primaryGradient};
+  background: ${({ theme }) => theme.colors.primary};
   padding: 15px 0;
   position: fixed;
   bottom: 0;

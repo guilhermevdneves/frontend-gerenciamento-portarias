@@ -5,14 +5,16 @@ import {
   Input,
   InputContainer,
   FormBox,
-  Form
+  Form,
+  UnathenticatedOption
 } from '../styled/login'
 import { SecondaryButton } from '../../../common/SecondaryButton/components/SecondaryButton'
 import { checkIfLoginTryIsValid } from '../../../utils/checkIfLoginTryIsValid'
 import { useAuthContext } from '../../../context/authContext'
 import { api } from '../../../services/api'
+import { UNAUTHENTICATED } from '../../../constants/unauthenticated'
 
-export function Login (props) {
+export function Login () {
   const { setAuthToken } = useAuthContext()
 
   const handleSubmit = async e => {
@@ -25,7 +27,9 @@ export function Login (props) {
         username
       }
 
-      if (checkIfLoginTryIsValid(credentials)) {
+      const isValid = await checkIfLoginTryIsValid(credentials)
+
+      if (isValid) {
         const response = await api.post('/login', credentials)
         setAuthToken(response.data)
       } else {
@@ -35,21 +39,30 @@ export function Login (props) {
       console.log('err', err)
     }
   }
+  
+  const loginWithoutAuthentication = () => { setAuthToken(UNAUTHENTICATED) }
 
   return (
     <Container>
       <FormBox>
-        <Title>Log in</Title>
+        <Title>Autenticar</Title>
 
         <Form onSubmit={e => handleSubmit(e)}>
           <InputContainer>
-            <Input placeholder='Login...' name='login' />
+            <Input placeholder='Login' name='login' />
 
-            <Input placeholder='Password...' name='password' />
+            <Input placeholder='Senha' name='password' />
           </InputContainer>
 
-          <SecondaryButton title='Log in' />
+          <SecondaryButton title='Logar' />
         </Form>
+
+        <UnathenticatedOption>
+          <Title>Ou</Title>
+
+          <SecondaryButton title='Entrar sem login' onClick={loginWithoutAuthentication} />
+        </UnathenticatedOption>
+        
       </FormBox>
     </Container>
   )

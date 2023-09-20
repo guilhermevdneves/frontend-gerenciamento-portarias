@@ -4,12 +4,7 @@ export const Container = styled.section`
   flex: 1;
   height: 100vh;
   width: 100%;
-  background: linear-gradient(
-    109.8deg,
-    rgb(62, 5, 116) -5.2%,
-    rgb(41, 14, 151) -5.2%,
-    rgb(216, 68, 148) 103.3%
-  );
+  background: linear-gradient(to right,#f8f9fa 0%,#dee2e6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,9 +23,9 @@ export const FormBox = styled.div`
   }
 `
 export const Title = styled.h2`
-  font-size: 28px;
+  font-size: 1.40625rem;
   padding-bottom: 30px;
-  font-weight: 500;
+  font-weight: 300;
 `
 
 export const InputContainer = styled.div`
@@ -44,6 +39,13 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+export const UnathenticatedOption = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 25px;
 `
 
 export const Input = styled.input.attrs(props => ({

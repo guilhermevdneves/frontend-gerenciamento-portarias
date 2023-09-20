@@ -11,16 +11,18 @@ import {
 } from '../styled/contactsModal'
 import { SecondaryButton } from '../../SecondaryButton/components/SecondaryButton'
 
-export function ContactsModal ({
+export function ContactsModal({
   title,
   onClose,
   onSubmit,
   buttonName,
   initialName = '',
-  initialNumber = ''
+  initialNumber = '',
+  initialEmail = ''
 }) {
   const [name, setName] = useState(initialName)
   const [number, setNumber] = useState(initialNumber)
+  const [email, setEmail] = useState(initialEmail)
 
   return (
     <Container>
@@ -33,7 +35,7 @@ export function ContactsModal ({
 
         <form onSubmit={onSubmit}>
           <InputContainer>
-            <InputDescription>Name</InputDescription>
+            <InputDescription>Name *</InputDescription>
             <Input
               placeholder='Name...'
               name='name'
@@ -41,12 +43,21 @@ export function ContactsModal ({
               onChange={e => setName(e.target.value)}
             />
 
-            <InputDescription>Number</InputDescription>
+            <InputDescription>Number *</InputDescription>
             <Input
               placeholder='Number...'
               name='number'
               value={number}
               onChange={e => setNumber(e.target.value)}
+            />
+
+
+            <InputDescription>Email</InputDescription>
+            <Input
+              placeholder='Email...'
+              name='email'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </InputContainer>
 
