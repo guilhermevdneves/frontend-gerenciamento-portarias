@@ -13,7 +13,7 @@ import {
   ContactEmail
 } from '../styled/contactCard'
 import ClickAwayListener from 'react-click-away-listener'
-import { ContactsModal } from '../../ContactsModal/components/ContactsModal'
+import { PortariasModal } from '../../ContactsModal/components/ContactsModal'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'
 import { useParams } from 'react-router-dom'
@@ -97,7 +97,7 @@ export function ContactCard({ contact, handleFetchContacts }) {
       )}
 
       {openEditContactModal && (
-        <ContactsModal
+        <PortariasModal
           initialName={contact.name ?? ''}
           initialNumber={contact.number ?? ''}
           onSubmit={e => handleEdit(e)}

@@ -21,3 +21,23 @@ export const situacaoPortaria = Object.freeze({
     texto: 'Extinção natural'
   }
 })
+
+export const situacaoPortariaInput = [
+  {
+    value: 'VIGENTE',
+    texto: 'Vigente'
+  },
+  {
+    value: 'ALTERADA',
+    texto: 'Alterada',
+
+  },
+  {
+    value: 'REVOGADA',
+    texto: 'Revogada'
+  },
+  {
+    value: 'EXTINTA',
+    texto: 'Extinção'
+  }
+];

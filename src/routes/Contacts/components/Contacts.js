@@ -9,7 +9,7 @@ import {
   ContactsContainer
 } from '../styled/contacts'
 import { SecondaryButton } from '../../../common/SecondaryButton/components/SecondaryButton'
-import { ContactsModal } from '../../../common/ContactsModal/components/ContactsModal'
+import { PortariasModal as PortariasModal } from '../../../common/ContactsModal/components/ContactsModal'
 import { ContactCard } from '../../../common/ContactCard/components/ContactCard'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'
@@ -90,7 +90,7 @@ export function Contacts () {
       )}
 
       {openAddContactModal && (
-        <ContactsModal
+        <PortariasModal
           onSubmit={e => handleAddContact(e)}
           onClose={() => setOpenAddContactModal(false)}
           title='Add new contact'

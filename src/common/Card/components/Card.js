@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   Container,
   Title,
@@ -15,7 +15,8 @@ import portariaImg from '../../../assets/images/portariaImg.png';
 import { situacaoPortaria } from '../../../constants/situacaoPortaria';
 
 export function Card ({ dadosPortaria }) {
-
+  const presidente = useMemo(() => dadosPortaria.servidores.find(servidor => servidor.presidente), [dadosPortaria]);
+console.log(presidente, 'presidente')
   return (
     <Container>
       <ContainerPortaria>
@@ -33,10 +34,18 @@ export function Card ({ dadosPortaria }) {
 
 
           <ConteudoTexto>
-            {`Data: ${dadosPortaria.publicacao} Val: ${dadosPortaria.validade}`}
+            {`DATA: ${dadosPortaria.publicacao} VAL: ${dadosPortaria.validade}`}
          </ConteudoTexto>
 
-          <ConteudoTexto>{dadosPortaria.numero}</ConteudoTexto>
+          <ConteudoTexto>
+            {`SERVIDORES:${dadosPortaria.servidores.map(servidor => ` ${servidor.nome}`)}`}
+          </ConteudoTexto>
+          {!!presidente &&
+            <ConteudoTexto>
+              {`PRESIDENTE: ${presidente.nome}`}
+            </ConteudoTexto>
+          }
+
       </ContainerInfo>
            
       <LabelSituaçao cor={situacaoPortaria[dadosPortaria.situacao].color} />

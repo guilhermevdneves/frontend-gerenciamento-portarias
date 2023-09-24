@@ -122,8 +122,17 @@ export const NumbersContainer = styled.div`
   }
 `
 
-export const NumbersDropdown = styled.select`
-  padding: 5px;
+export const CriarPortaria = styled.button`
+  color: ${({ theme }) => theme.colors.primary};
+  background-color: transparent;
+  border: 2px solid ${({ theme }) => theme.colors.primary};
   border-radius: 5px;
-  border: 2px solid ${({ theme }) => theme.colors.lightGrey};
+  padding: 10px;
+  font-weight: 700;
+  font-size: 16px;
+
+  &:hover  {
+    cursor: pointer;
+  }
+
 `

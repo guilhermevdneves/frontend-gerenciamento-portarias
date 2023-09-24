@@ -40,6 +40,10 @@ export const ImagemPortaria = styled.img`
 
 export const BotaoPortaria = styled.a`
   background-color: transparent;
+  
+  &:hover {
+    cursor: ${props => (props.disabled ? 'unset' : 'pointer')};
+  }
 `
 
 export const ContainerInfo = styled.div`

@@ -38,6 +38,8 @@ export const InputContainer = styled.label`
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
+  max-height: 60vh;
+  overflow-y: scroll;
 `
 
 export const HeaderContainer = styled.div`
@@ -59,6 +61,17 @@ export const CloseButton = styled.button`
   }
 `
 
+export const RadioButtonText = styled.label`
+  font-size: 16px;
+  margin-bottom: 5px;
+`
+export const RadioButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+`
+
+
 export const Input = styled.input.attrs(props => ({
   type: 'text',
   placeholder: props.placeholder
@@ -73,4 +86,17 @@ export const Input = styled.input.attrs(props => ({
   @media (max-width: 768px) {
     min-width: 100%;
   }
+`
+
+export const RadioButton = styled.input.attrs(props => ({
+   type: "radio",
+}))`
+   margin-right: 10px; 
+`
+
+export const CheckboxButton = styled.input.attrs(props => ({
+  type: "checkbox",
+  name: "checkbox"
+}))`
+  margin-right: 10px; 
 `
