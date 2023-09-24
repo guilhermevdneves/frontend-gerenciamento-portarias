@@ -17,7 +17,8 @@ export const Modal = styled.div`
   background-color: #fff;
   border-radius: 5px;
   padding: 25px;
-
+  width: 70vw;
+  
   @media (max-width: 768px) {
     width: 100%;
   }
