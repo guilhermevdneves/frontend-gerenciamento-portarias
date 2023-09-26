@@ -43,7 +43,7 @@ export const Title = styled.h1`
   font-size: 34px;
   color: ${({ theme }) => theme.colors.primary};
 `
-export const CardContainer = styled.div`
+export const PortariaContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-column-gap: 35px;
@@ -130,6 +130,7 @@ export const CriarPortaria = styled.button`
   padding: 10px;
   font-weight: 700;
   font-size: 16px;
+  width: 150px;
 
   &:hover  {
     cursor: pointer;

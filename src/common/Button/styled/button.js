@@ -1,14 +1,9 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const Container = styled(Link).attrs(({ disabled, numberselected = '' }) =>
-  disabled ? {} : { to: `/numbers/${numberselected}/contacts` }
-)`
-  color: white;
-  background: ${props =>
-    props.disabled
-      ? 'rgb(85, 20, 180, 0.5)'
-      : props.theme.colors.primaryGradient};
+export const Container = styled.button`
+  color: ${({ theme }) => theme.colors.primary};
+  background: transparent;
+  border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 5px;
   padding: 8px 10px;
   min-width: 100px;

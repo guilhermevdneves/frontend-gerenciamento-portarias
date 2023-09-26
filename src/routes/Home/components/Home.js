@@ -5,12 +5,12 @@ import {
   Container,
   Title,
   TitleContainer,
-  CardContainer,
+  PortariaContainer,
   CriarPortaria
 } from '../styled/home'
-import { Card } from '../../../common/Card/components/Card'
+import { Portaria } from '../../../common/Portaria/components/Portaria'
 import { api } from '../../../services/api'
-import { PortariasModal } from '../../../common/ContactsModal/components/ContactsModal';
+import { PortariasModal } from '../../../common/PortariasModal/components/PortariasModal';
 
 export function Home () {
   const [portarias, setPortarias] = useState([]);
@@ -18,7 +18,6 @@ export function Home () {
 
   const fetchData = async () => {
     const response  = await api.get('/portarias');
-
 
     setPortarias(response.data);
   }
@@ -28,26 +27,30 @@ export function Home () {
   }
 
   useEffect(() => {fetchData()}, []);
- 
+  
   return (
     <Container>
       <TitleContainer>
         <Title>Portal para gerenciamento de portarias</Title>
       </TitleContainer>
 
-      <CriarPortaria onClick={criarNovaPortaria}>+ Portaria</CriarPortaria>
+      <PortariaContainer>
+        <CriarPortaria onClick={criarNovaPortaria}>
+          + Portaria
+        </CriarPortaria>
     
-      <CardContainer>
+
         {portarias.map(portaria => 
-          <Card
+          <Portaria
+            portarias={portarias}
+            key={portaria.id}
             dadosPortaria={portaria}
             title='Anexo'
             disabled
             content={<p>Conteúdo indisponível</p>}
           />
         )}
-      </CardContainer>
-
+      </PortariaContainer>
       
       {openAddContactModal && (
         <PortariasModal

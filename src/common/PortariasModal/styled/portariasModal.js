@@ -12,6 +12,19 @@ export const Container = styled.section`
   align-items: center;
   justify-content: center;
 `
+export const SelectComponent = styled.select`
+  padding: 15px;
+  border: 1px solid ${({ theme }) => theme.colors.lightGrey};
+  border-radius: 5px;
+  font-size: 16px;
+
+`
+
+export const SelectOptionComponent = styled.option`
+  padding: 15px;
+  font-size: 16px;
+`
+
 
 export const Modal = styled.div`
   background-color: #fff;
@@ -38,8 +51,8 @@ export const InputDescription = styled.label`
 export const InputContainer = styled.label`
   display: flex;
   flex-direction: column;
-  margin-bottom: 25px;
   max-height: 60vh;
+  padding-bottom: 25px;
   overflow-y: scroll;
 `
 
@@ -82,7 +95,7 @@ export const Input = styled.input.attrs(props => ({
   padding: 15px 10px;
   font-size: 16px;
   min-width: 400px;
-  margin-bottom: 15px;
+  margin-bottom: ${({ noMargin }) => noMargin ? 0 : '15px'};
 
   @media (max-width: 768px) {
     min-width: 100%;

@@ -1,22 +1,22 @@
 export const situacaoPortaria = Object.freeze({
-  VIGENTE: {
-    value: 'VIGENTE',
+  vigente: {
+    value: 'vigente',
     color: '#4DAE00',
     texto: 'Vigente'
   },
-  ALTERADA: {
-    value: 'ALTERADA',
+  alterada: {
+    value: 'alterada',
     color: '#E4A400',
     texto: 'Alterada pela portaria ',
 
   },
-  REVOGADA: {
-    value: 'REVOGADA',
+  revogada: {
+    value: 'revogada',
     color: '#FF0000',
     texto: 'Revogada pela portaria'
   },
-  EXTINTA: {
-    value: 'EXTINTA',
+  extinta: {
+    value: 'extinta',
     color: '#3F3939',
     texto: 'Extinção natural'
   }
@@ -24,20 +24,20 @@ export const situacaoPortaria = Object.freeze({
 
 export const situacaoPortariaInput = [
   {
-    value: 'VIGENTE',
+    value: 'vigente',
     texto: 'Vigente'
   },
   {
-    value: 'ALTERADA',
+    value: 'alterada',
     texto: 'Alterada',
 
   },
   {
-    value: 'REVOGADA',
+    value: 'revogada',
     texto: 'Revogada'
   },
   {
-    value: 'EXTINTA',
+    value: 'extinta',
     texto: 'Extinção'
   }
 ];

@@ -9,7 +9,7 @@ import {
   ContactsContainer
 } from '../styled/contacts'
 import { SecondaryButton } from '../../../common/SecondaryButton/components/SecondaryButton'
-import { PortariasModal as PortariasModal } from '../../../common/ContactsModal/components/ContactsModal'
+import { PortariasModal } from '../../../common/PortariasModal/components/PortariasModal'
 import { ContactCard } from '../../../common/ContactCard/components/ContactCard'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'

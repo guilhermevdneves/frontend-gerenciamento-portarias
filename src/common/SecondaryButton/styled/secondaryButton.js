@@ -12,4 +12,9 @@ export const Container = styled.button`
   &:hover {
     cursor: pointer;
   }
+  
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
 `

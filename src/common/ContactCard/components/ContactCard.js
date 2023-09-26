@@ -13,7 +13,7 @@ import {
   ContactEmail
 } from '../styled/contactCard'
 import ClickAwayListener from 'react-click-away-listener'
-import { PortariasModal } from '../../ContactsModal/components/ContactsModal'
+import { PortariasModal } from '../../PortariasModal/components/PortariasModal'
 import { isContactValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'
 import { useParams } from 'react-router-dom'

@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react'
 import { Button, AddButton, RemoveButton, Container } from '../styled/incrementalInput'
-import { Input } from '../../ContactsModal/styled/contactsModal'
+import { Input } from '../../PortariasModal/styled/portariasModal'
 
 export function IncrementalInput(props) {
-  console.log(props);
   const inputWithButtons = (input, index) => (
     <div>
       <Input
@@ -13,13 +12,19 @@ export function IncrementalInput(props) {
       /> 
 
       {!!input.length &&
-        <Button onClick={() => props.increase()}>
+        <Button onClick={(e) => {
+          e.preventDefault()
+          props.increase(e)
+        }}>
            <AddButton size={26} color={'red'} />
          </Button>
       }
  
       {props.inputs.length > 1 &&
-        <Button onClick={() => props.decrease()}>
+        <Button onClick={(e) => (e) => {
+          e.preventDefault()
+          props.decrease(e)
+        }}>
           <RemoveButton size={26} color='blue' />
         </Button>
       }
@@ -28,7 +33,7 @@ export function IncrementalInput(props) {
 
 
   return ( 
-    <Container>
+    <Container >
       {props.inputs.map((input, index) => (
         <Fragment>
           {(props.inputs.length - 1) !== index ?
