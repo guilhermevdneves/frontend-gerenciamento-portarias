@@ -40,6 +40,7 @@ export function PortariasModal({
   const [situacao, setSituacao] = useState(situacaoPortariaInput[0].value);
   const [linkPortaria, setLinkPortaria] = useState('');
   const [alteracoes, setAlteracoes] = useState([]);
+
   const [errors, setErrors] = useState(false);
   const { authToken } = useAuthContext()
   
@@ -325,7 +326,13 @@ export function PortariasModal({
 
           </InputContainer>
 
-          <SecondaryButton disabled={Object.values(errors).some(error => error === true)} onClick={handleSave} title={buttonName} />
+          <SecondaryButton 
+            disabled={
+              Object.values(errors).some(error => error === true)
+            } 
+            onClick={handleSave}
+            title={buttonName}
+          />
       </Modal>
     </Container>
   )

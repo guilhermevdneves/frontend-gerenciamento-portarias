@@ -10,7 +10,6 @@ export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: url(${background});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -122,7 +121,7 @@ export const NumbersContainer = styled.div`
   }
 `
 
-export const CriarPortaria = styled.button`
+export const PrimaryButton = styled.button`
   color: ${({ theme }) => theme.colors.primary};
   background-color: transparent;
   border: 2px solid ${({ theme }) => theme.colors.primary};

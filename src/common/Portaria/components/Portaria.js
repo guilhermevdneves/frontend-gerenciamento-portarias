@@ -55,13 +55,13 @@ export function Portaria ({ dadosPortaria, portarias }) {
 
                     if(portariaEncontrada) {
                       return (
-                        <a href={`#${portariaEncontrada.numero}-${new Date(portariaEncontrada.publicacao).getFullYear()}`}>
+                        <a key={portariaEncontrada.id} href={`#${portariaEncontrada.numero}-${new Date(portariaEncontrada.publicacao).getFullYear()}`}>
                           {' ' + formatPortariaLabel(portariaEncontrada)}
                         </a>
                         )
                     }
 
-                    return <Fragment/>;
+                    return <Fragment  />;
                   })
               }        
           </ConteudoTexto>
