@@ -38,6 +38,7 @@ export function IncrementalInput(props) {
         <Fragment>
           {(props.inputs.length - 1) !== index ?
               <Input
+                key={`input-${props.name}`}
                 value={input}
                 name={props.name}
                 onChange={e => props.setAnSpecificInput(e.target.value, index)}

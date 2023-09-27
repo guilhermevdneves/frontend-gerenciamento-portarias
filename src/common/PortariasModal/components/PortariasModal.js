@@ -183,7 +183,6 @@ export function PortariasModal({
   }
 
   const handleSave = async () => {
-    console.log(validade);
     const payload = {
       assunto,
       publicacao: convertDateForApi(publicacao),
@@ -194,18 +193,24 @@ export function PortariasModal({
       situacao,
       servidores: servidores.map(servidor => ({ nome: servidor, presidente: false})),
       alteracoes,
-      numero: 'CPV.0011'
     }
     console.log(payload);
-    await api.post(
-      '/portaria',
-      payload,
-      {
-        headers: { Authorization: authToken.token }
-      }
-    )
-
-    await fetchData();
+    
+    try {
+      await api.post(
+        '/portaria',
+        payload,
+        {
+          headers: { Authorization: authToken.token }
+        }
+      )
+      
+      await fetchData();
+    } catch(e) {
+      alert("Erro! Tente novamente mais tarde")
+    }
+    
+   
     onClose();
   }
 
@@ -292,7 +297,7 @@ export function PortariasModal({
               <ErrorBanner/>
             }
 
-            <InputDescription>Validade *</InputDescription>
+            <InputDescription>Validade</InputDescription>
             <Input
               onBlur={ e => isDateValid(e.target.value, 'validade')}
               placeholder='Validade...'
@@ -328,7 +333,12 @@ export function PortariasModal({
 
           <SecondaryButton 
             disabled={
-              Object.values(errors).some(error => error === true)
+              Object.values(errors).some(error => error === true) ||
+              !assunto.length ||
+              !publicacao.length ||
+              !servidores.length ||
+              !classificacao.length ||
+              !linkPortaria.length
             } 
             onClick={handleSave}
             title={buttonName}

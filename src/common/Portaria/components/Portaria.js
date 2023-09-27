@@ -50,18 +50,18 @@ export function Portaria ({ dadosPortaria, portarias }) {
             {
                 dadosPortaria
                   .alteracoes
-                  .map(alteracao => {
+                  .map((alteracao, index) => {
                     const portariaEncontrada = portarias.find(port => port.id === alteracao.idPortaria);
 
                     if(portariaEncontrada) {
                       return (
-                        <a key={portariaEncontrada.id} href={`#${portariaEncontrada.numero}-${new Date(portariaEncontrada.publicacao).getFullYear()}`}>
+                        <a  key={`alteracao${alteracao.idPortaria}-${index}`} href={`#${portariaEncontrada.numero}-${new Date(portariaEncontrada.publicacao).getFullYear()}`}>
                           {' ' + formatPortariaLabel(portariaEncontrada)}
                         </a>
-                        )
+                      )
                     }
 
-                    return <Fragment  />;
+                    return <Fragment key={`alteracao${alteracao.idPortaria}-${index}`} />;
                   })
               }        
           </ConteudoTexto>

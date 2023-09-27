@@ -11,18 +11,6 @@ export const camposFiltros = [
         value: 'situacao',
         label: 'Situação'
     },
-    {
-        value: 'publicacao',
-        label: 'Publicação'
-    },
-    {
-        value: 'servidores',
-        label: 'Servidores'
-    },
-    {
-        value: 'alteracoes',
-        label: 'Alterada por'
-    },
   
 ]
 
