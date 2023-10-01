@@ -38,3 +38,7 @@ export const FiltersTitle = styled.h1`
   margin-bottom: 25px;
 `;
 
+export const InputLabel = styled.label`
+  font-size: 16px;
+  margin-bottom: 5px;
+`;

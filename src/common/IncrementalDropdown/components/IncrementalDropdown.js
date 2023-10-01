@@ -16,7 +16,6 @@ export function IncrementalDropdown(props) {
     setResults(response.data)
   }
 
-  console.log(props.inputs)
   return ( 
     <Container>
       {props.inputs.map((input, index) => (

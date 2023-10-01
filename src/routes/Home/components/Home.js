@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
+import { isSameDay } from 'date-fns';
 import {
   Container,
   Title,
@@ -15,6 +16,9 @@ import { api } from '../../../services/api'
 import { PortariasModal } from '../../../common/PortariasModal/components/PortariasModal';
 import { Filters } from '../../../common/Filters/components/Filters';
 import { camposFiltros } from '../../../constants/camposFiltros'
+import { dateMask } from '../../../utils/dateMask';
+import { isDateValid } from '../../../utils/isDateValid';
+import { convertDateMaskToDate } from '../../../utils/covertDateMaskToDate';
 
 export function Home (props) {
   const [portarias, setPortarias] = useState([]);
@@ -38,8 +42,17 @@ export function Home (props) {
     setFields(prevState => {
       const newArray = [...prevState];
       const indexAtual = newArray.findIndex(item => item.value === campo);
+      
       if (indexAtual !== -1) {
-        newArray[indexAtual].filterText = valor;
+
+        if(
+          prevState[indexAtual].type === 'string' ||
+          prevState[indexAtual].type === 'servidores'
+        ) {
+          newArray[indexAtual].filterText = valor;
+        } else if(prevState[indexAtual].type === 'date') {
+          newArray[indexAtual].filterText = dateMask(valor);
+        }
       }
 
       return newArray;
@@ -54,19 +67,32 @@ export function Home (props) {
   }
 
   const buscarPorData = (portaria, field) => {
-    const valorDaPortaria = portaria[field.value].toLowerCase();
+    if(!isDateValid(field.filterText)) {
+      return null;
+    }
+
+    const valorDoInput = convertDateMaskToDate(field.filterText);
+    const valorDaPortaria = new Date(portaria[field.value]);
+    
+    return isSameDay(valorDoInput, valorDaPortaria);
+  }
+
+  const buscarPorServidores = (portaria, field) => {
     const valorDoInput = field.filterText ? field.filterText.toLowerCase() : null;
 
-    return valorDoInput && valorDaPortaria.includes(valorDoInput);
+    return valorDoInput && portaria[field.value].some(servidor => servidor.nome.toLowerCase().includes(valorDoInput));
   }
   
-
   const buscarPorFiltros = () => {
     const result = portarias.filter(portaria => {
       const filtros = fields.map(field => {
         if(field.type === 'string') {
           return buscarPorString(portaria, field)
-        }
+        } else if(field.type === 'date') {
+          return buscarPorData(portaria, field)
+        }  else if(field.type === 'servidores') {
+          return buscarPorServidores(portaria, field)
+        } 
 
         return null
       });
@@ -100,8 +126,6 @@ export function Home (props) {
         <Title>Portal para gerenciamento de portarias</Title>
       </TitleContainer>
 
-
-
       <PortariaContainer>
         <PrimaryButton onClick={criarNovaPortaria}>
           + Portaria
@@ -114,7 +138,11 @@ export function Home (props) {
         </Link>
 
         <Test>
-          <Filters cleanFilters={cleanFilters} fields={fields} handleChangeFilter={handleChangeFilter}/>
+          <Filters 
+            cleanFilters={cleanFilters}
+            fields={fields}
+            handleChangeFilter={handleChangeFilter}
+          />
           
           <Portarias>
             {(!fiteredPortarias.length && !fields.some(field => field.filterText && field.filterText.length)) ?
@@ -124,26 +152,20 @@ export function Home (props) {
                     portarias={portarias}
                     key={portaria.id}
                     dadosPortaria={portaria}
-                    title='Anexo'
-                    disabled
-                    content={<p>Conteúdo indisponível</p>}
                   />
                 )}
                 {
                   !portarias.length &&
                   <WarningMessage>Ops... Não há portarias cadastradas!</WarningMessage>
                 }
-                </Fragment>
-              :
+              </Fragment>
+            :
               <Fragment>
                 {fiteredPortarias.map(portaria => 
                   <Portaria
                     portarias={portarias}
                     key={portaria.id}
                     dadosPortaria={portaria}
-                    title='Anexo'
-                    disabled
-                    content={<p>Conteúdo indisponível</p>}
                   />
                 )}
                 {
@@ -152,7 +174,6 @@ export function Home (props) {
                 }
               </Fragment>
             }
-
           </ Portarias>
         </Test>
       </PortariaContainer>

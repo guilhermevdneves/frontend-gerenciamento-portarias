@@ -26,6 +26,7 @@ import { alteracoesPortarias } from '../../../constants/alteracoesPortarias';
 import { ErrorBanner } from '../../ErrorBanner/components/ErrorBanner';
 import { dateMask } from '../../../utils/dateMask';
 import { isDateValid } from '../../../utils/isDateValid';
+import { convertDateMaskToDate } from '../../../utils/covertDateMaskToDate';
 
 export function PortariasModal({
   title,
@@ -42,19 +43,9 @@ export function PortariasModal({
   const [situacao, setSituacao] = useState(situacaoPortariaInput[0].value);
   const [linkPortaria, setLinkPortaria] = useState('');
   const [alteracoes, setAlteracoes] = useState([]);
-
   const [errors, setErrors] = useState(false);
   const { authToken } = useAuthContext()
   
-  const convertDateForApi = (date) => {
-    const parts = date.split("/"); 
-    const day = parseInt(parts[0], 10); 
-    const month = parseInt(parts[1], 10);
-    const year = parseInt(parts[2], 10);
-    
-    return  new Date(year, month - 1, day); 
-  }
- 
  
   const handleChangeDate = (value) => {
     setPublicacao(dateMask(value))
@@ -123,6 +114,7 @@ export function PortariasModal({
 
   function isGoogleDriveLink(url, input) {
     const driveLinkRegex = /^https:\/\/drive\.google\.com\/(?:open\?id=|file\/d\/)([a-zA-Z0-9_-]+)\/?/;
+   
     if(driveLinkRegex.test(url)){
       setErrors(prevState => ({
         ...prevState,
@@ -136,21 +128,18 @@ export function PortariasModal({
     }
   }
 
-
-
   const handleSave = async () => {
     const payload = {
       assunto,
-      publicacao: convertDateForApi(publicacao),
+      publicacao: convertDateMaskToDate(publicacao),
       link: linkPortaria,
       classificacao,
-      validade: convertDateForApi(validade),
+      validade: convertDateMaskToDate(validade),
       permanente,
       situacao,
       servidores: servidores.map(servidor => ({ nome: servidor, presidente: false})),
       alteracoes,
     }
-    console.log(payload);
     
     try {
       await api.post(
@@ -165,7 +154,6 @@ export function PortariasModal({
     } catch(e) {
       alert("Erro! Tente novamente mais tarde")
     }
-    
    
     onClose();
   }
@@ -211,9 +199,7 @@ export function PortariasModal({
               onChange={e => handleChangeDate(e.target.value)}
             />
 
-            {errors.publicacao &&
-              <ErrorBanner/>
-            }
+            {errors.publicacao && <ErrorBanner/>}
 
             <InputDescription>Classificação *</InputDescription>
               <RadioButtonContainer>
@@ -222,7 +208,10 @@ export function PortariasModal({
                   onChange={handleOptionChange}
                 >
                   {classificacaoPortaria.map((option) => (
-                    <SelectOptionComponent key={option.value} value={option.value}>
+                    <SelectOptionComponent
+                      key={option.value}
+                      value={option.value}
+                    >
                       {option.label}
                     </SelectOptionComponent>
                   ))}
@@ -236,7 +225,10 @@ export function PortariasModal({
                   onChange={handleSituacaoChange}
                 >
                   {situacaoPortariaInput.map((option) => (
-                    <SelectOptionComponent key={option.value} value={option.value}>
+                    <SelectOptionComponent
+                      key={option.value}
+                      value={option.value}
+                    >
                       {option.texto}
                     </SelectOptionComponent>
                   ))}
@@ -263,9 +255,7 @@ export function PortariasModal({
               onChange={e => setLinkPortaria(e.target.value)}
             />
 
-            {errors.link &&
-              <ErrorBanner/>
-            }
+            {errors.link && <ErrorBanner/>}
 
             <InputDescription>Validade</InputDescription>
             <Input
@@ -276,18 +266,16 @@ export function PortariasModal({
               onChange={e => handleChangeValidade(e.target.value)}
             />
 
-            {errors.validade &&
-               <ErrorBanner/>
-            }
+            {errors.validade && <ErrorBanner/>}
 
             <InputDescription>Servidores *</InputDescription>
-           <IncrementalInput
-            setAnSpecificInput={setAnSpecificServidor}
-             name="servidores"
+            <IncrementalInput
+              setAnSpecificInput={setAnSpecificServidor}
+              name="servidores"
               inputs={servidores}
-               decrease={decreaseServidores}
-                increase={increaseServidores}
-                />
+              decrease={decreaseServidores}
+              increase={increaseServidores}
+            />
 
            <InputDescription>Alterações</InputDescription>
            <IncrementalDropdown
@@ -298,7 +286,6 @@ export function PortariasModal({
               decrease={decreaseAlteracoes}
               increase={increaseAlteracoes}
             />
-
           </InputContainer>
 
           <SecondaryButton 

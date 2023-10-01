@@ -1,9 +1,8 @@
-import React from 'react'
-import { Container, Input, FiltersTitle } from '../styled/filters'
+import React, { Fragment } from 'react'
+import { Container, Input, FiltersTitle, InputLabel } from '../styled/filters'
 import { PrimaryButton } from '../../../routes/Home/styled/home'
 
 export function Filters ({ handleChangeFilter, fields, cleanFilters }) {
-  console.log(fields)
   return (
     <div> 
       <Container>
@@ -12,13 +11,15 @@ export function Filters ({ handleChangeFilter, fields, cleanFilters }) {
         <PrimaryButton onClick={(e) => cleanFilters(e)}>Limpar Filtros</PrimaryButton>
         {
           fields.map(campo => (
-            <Input 
-              key={campo.value}
-              name={campo.value}
-              onChange={(e) => handleChangeFilter(campo.value, e.target.value)}
-              placeholder={campo.label}
-              value={campo.filterText || ''}
-            />
+            <Fragment>
+              <InputLabel>{campo.label}</InputLabel>
+              <Input 
+                key={campo.value}
+                name={campo.value}
+                onChange={(e) => handleChangeFilter(campo.value, e.target.value)}
+                value={campo.filterText || ''}
+              />
+            </Fragment>
           ))
         }
       </Container>
