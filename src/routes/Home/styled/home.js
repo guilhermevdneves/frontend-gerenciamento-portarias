@@ -1,9 +1,28 @@
 import styled from 'styled-components'
-import background from '../../../assets/images/background.png'
 import gLogo from '../../../assets/images/gartner-logo.svg'
 
 export const Container = styled.div`
   margin-bottom: 100px;
+`
+export const Test = styled.div`
+  display: flex;
+`
+export const Portarias = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+  > section {
+    margin-bottom: 25px; /* Ajuste o valor conforme necessário */
+  }
+`
+
+export const WarningMessage = styled.p`
+ color: ${({ theme }) => theme.colors.primary};
+ font-size: 24px;
+ font-weight: bold;
+
 `
 
 export const TitleContainer = styled.div`
@@ -129,7 +148,7 @@ export const PrimaryButton = styled.button`
   padding: 10px;
   font-weight: 700;
   font-size: 16px;
-  width: 150px;
+  width: fit-content;
 
   &:hover  {
     cursor: pointer;

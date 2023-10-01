@@ -5,13 +5,17 @@ import { Login } from './routes/Login/components/Login'
 import { useAuthContext } from './context/authContext';
 import { StyleRouter } from './styled'
 import { UNAUTHENTICATED } from './constants/unauthenticated'
+import { Servidores } from './routes/Servidores/components/Servidores';
 
 const Authenticatedroutes = createBrowserRouter([
   {
     path: '/',
     element: <Home />
   },
-  
+  {
+    path: 'servidores',
+    element: <Servidores />
+  }
 ])
 
 const routes = createBrowserRouter([

@@ -7,6 +7,7 @@ export const Container = styled.section`
   border: 2px solid ${({ theme }) => theme.colors.lightGrey};
   border-radius: 8px;
   background-color: #FAFAF5;
+  width: 100%;
 `
 export const Title = styled.h1`
   font-size: 18px;
@@ -38,8 +39,9 @@ export const LabelSituaçao = styled.div`
 export const ImagemPortaria = styled.img`
 `
 
-export const BotaoPortaria = styled.a`
+export const BotaoPortaria = styled.button`
   background-color: transparent;
+  border: 0;
   
   &:hover {
     cursor: ${props => (props.disabled ? 'unset' : 'pointer')};

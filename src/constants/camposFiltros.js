@@ -1,16 +1,23 @@
 export const camposFiltros = [
     {
         value: 'numero',
-        label: 'Número'
+        label: 'Número',
+        type: 'string'
     },
     {
         value: 'assunto',
-        label: 'Assunto'
+        label: 'Assunto',
+        type: 'string'
     },
     {
         value: 'situacao',
-        label: 'Situação'
+        label: 'Situação',
+        type: 'string'
     },
-  
+    {
+        value: 'publicacao',
+        label: 'Publicação',
+        type: 'date'
+    },
 ]
 

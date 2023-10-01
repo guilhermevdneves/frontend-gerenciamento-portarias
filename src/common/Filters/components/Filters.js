@@ -1,29 +1,27 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Container, Input, FiltersTitle } from '../styled/filters'
 import { PrimaryButton } from '../../../routes/Home/styled/home'
 
-export function Filters ({ handleChangeFilter, fields }) {
-
-  const handleCleanFields = () => {
-
-  }
-
+export function Filters ({ handleChangeFilter, fields, cleanFilters }) {
+  console.log(fields)
   return (
-    <Fragment> 
-      <FiltersTitle>Flitros</FiltersTitle>
-
+    <div> 
       <Container>
-        <PrimaryButton onClick={handleCleanFields}>Limpar</PrimaryButton>
+        <FiltersTitle>Flitros</FiltersTitle>
+
+        <PrimaryButton onClick={(e) => cleanFilters(e)}>Limpar Filtros</PrimaryButton>
         {
           fields.map(campo => (
             <Input 
               key={campo.value}
-              onChange={(e) => handleChangeFilter(campo.value, e.target.value )}
+              name={campo.value}
+              onChange={(e) => handleChangeFilter(campo.value, e.target.value)}
               placeholder={campo.label}
+              value={campo.filterText || ''}
             />
           ))
         }
       </Container>
-    </Fragment>
+    </div>
   )
 }

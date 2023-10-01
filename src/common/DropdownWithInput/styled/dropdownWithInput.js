@@ -25,7 +25,6 @@ export const DropdownList = styled.ul`
   top: 100%;
   left: 0;
   width: 100%;
-  max-height: 150px; /* Altura máxima da lista suspensa */
   border: 1px solid ${({ theme }) => theme.colors.lightGrey};
   border-top: none;
   border-radius: 0 0 5px 5px;

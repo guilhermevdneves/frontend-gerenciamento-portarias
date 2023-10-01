@@ -24,6 +24,8 @@ import { api } from '../../../services/api';
 import { useAuthContext } from '../../../context/authContext';
 import { alteracoesPortarias } from '../../../constants/alteracoesPortarias';
 import { ErrorBanner } from '../../ErrorBanner/components/ErrorBanner';
+import { dateMask } from '../../../utils/dateMask';
+import { isDateValid } from '../../../utils/isDateValid';
 
 export function PortariasModal({
   title,
@@ -52,56 +54,8 @@ export function PortariasModal({
     
     return  new Date(year, month - 1, day); 
   }
-
-  const dateMask = (value) => {
-    const cleanedInput = value.replace(/\D/g, '');
-  
-    const maxLength = 8; // DD/MM/AAAA tem 8 dígitos
-    const truncatedInput = cleanedInput.slice(0, maxLength);
-
-    
-    if (truncatedInput.length >= 1) {
-      let formattedDate = truncatedInput.substring(0, 2);
-      if (truncatedInput.length >= 3) {
-        formattedDate += '/' + truncatedInput.substring(2, 4);
-        if (truncatedInput.length >= 5) {
-          formattedDate += '/' + truncatedInput.substring(4, 8);
-        }
-      }
-      return formattedDate;
-  }
-
-  return '';
-  }
-
-  function isDateValid(dateString, input) {
-    
-    const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-    if (!datePattern.test(dateString)) {
-      return false;
-    }
-  
-    const [day, month, year] = dateString.split('/').map(Number);
-  
-    // Verifica se a data é válida usando o objeto Date
-    const date = new Date(year, month - 1, day); // O mês em Date começa em 0 (janeiro é 0)
-    if (
-      date.getDate() !== day ||
-      date.getMonth() !== month - 1 ||
-      date.getFullYear() !== year
-    ) {
-      setErrors(prevState => ({
-        ...prevState,
-        [input]: true
-      }))
-    } else {
-      setErrors(prevState => ({
-        ...prevState,
-        [input]: false
-      }))
-    }
-  }
-
+ 
+ 
   const handleChangeDate = (value) => {
     setPublicacao(dateMask(value))
   }
@@ -182,6 +136,8 @@ export function PortariasModal({
     }
   }
 
+
+
   const handleSave = async () => {
     const payload = {
       assunto,
@@ -214,6 +170,20 @@ export function PortariasModal({
     onClose();
   }
 
+  const checkIfDateIsValid = (dateString, input) => {
+    if(!isDateValid(dateString)){
+      setErrors(prevState => ({
+        ...prevState,
+        [input]: true
+      }))
+    } else {
+      setErrors(prevState => ({
+        ...prevState,
+        [input]: false
+      })) 
+    }
+  }
+
   return (
     <Container>
       <Modal>
@@ -234,7 +204,7 @@ export function PortariasModal({
 
             <InputDescription>Data da publicação *</InputDescription>
             <Input
-              onBlur={ e => isDateValid(e.target.value, 'publicacao')}
+              onBlur={ e => checkIfDateIsValid(e.target.value, 'publicacao')}
               placeholder='Data da publicação...'
               name='publicacao'
               value={publicacao}
@@ -259,7 +229,7 @@ export function PortariasModal({
               </SelectComponent>
             </RadioButtonContainer>
 
-            <InputDescription>Situação</InputDescription>
+            <InputDescription>Situação *</InputDescription>
               <RadioButtonContainer>
                 <SelectComponent
                   value={situacao}
@@ -284,7 +254,7 @@ export function PortariasModal({
               </RadioButtonText>
             </RadioButtonContainer>
 
-            <InputDescription>Link da portaria</InputDescription>
+            <InputDescription>Link da portaria *</InputDescription>
             <Input
               onBlur={e => isGoogleDriveLink(e.target.value, 'link')}
               placeholder='Link da portaria...'
@@ -299,7 +269,7 @@ export function PortariasModal({
 
             <InputDescription>Validade</InputDescription>
             <Input
-              onBlur={ e => isDateValid(e.target.value, 'validade')}
+              onBlur={ e => checkIfDateIsValid(e.target.value, 'validade')}
               placeholder='Validade...'
               name='validade'
               value={validade}
@@ -319,7 +289,7 @@ export function PortariasModal({
                 increase={increaseServidores}
                 />
 
-           <InputDescription>Alterações *</InputDescription>
+           <InputDescription>Alterações</InputDescription>
            <IncrementalDropdown
               options={alteracoesPortarias}
               setAnSpecificInput={setAnSpecificAlteracao}
