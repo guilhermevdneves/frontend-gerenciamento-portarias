@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { isSameDay } from 'date-fns';
 import {
   Container,
-  Title,
-  TitleContainer,
   PortariaContainer,
   PrimaryButton,
   Test,
@@ -19,13 +17,17 @@ import { camposFiltros } from '../../../constants/camposFiltros'
 import { dateMask } from '../../../utils/dateMask';
 import { isDateValid } from '../../../utils/isDateValid';
 import { convertDateMaskToDate } from '../../../utils/covertDateMaskToDate';
+import { useAuthContext } from '../../../context/authContext';
+import { isUserLoggedIn } from '../../../utils/isUserLoggedIn';
 
 export function Home (props) {
   const [portarias, setPortarias] = useState([]);
   const [fiteredPortarias, setFilteredPortarias] = useState([]);
   const [openAddContactModal, setOpenAddContactModal] = useState(false)
   const [fields, setFields] = useState(camposFiltros);
-
+  const authContext = useAuthContext()
+  const isUserLogged = isUserLoggedIn(authContext)
+  
   const fetchData = async () => {
     const response  = await api.get('/portarias');
     setPortarias(response.data);
@@ -123,15 +125,19 @@ export function Home (props) {
   return (
     <Container>
       <PortariaContainer>
-        <PrimaryButton onClick={criarNovaPortaria}>
-          + Portaria
-        </PrimaryButton>
-        
-        <Link to={'/servidores'}>
-          <PrimaryButton>
-            Adicionar servidores
+        {isUserLogged &&
+          <Fragment>
+          <PrimaryButton onClick={criarNovaPortaria}>
+            + Portaria
           </PrimaryButton>
-        </Link>
+        
+          <Link to={'/servidores'}>
+            <PrimaryButton>
+              Adicionar servidores
+            </PrimaryButton>
+          </Link>
+          </Fragment>
+        }
 
         <Test>
           <Filters 

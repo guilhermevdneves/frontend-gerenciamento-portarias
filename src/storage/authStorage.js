@@ -5,6 +5,5 @@ export const getUserStorage = () => {
 }
 
 export const setUserStorage = (payload) => {
-  console.log(payload);
   sessionStorage.setItem(USER, JSON.stringify(payload));
 }

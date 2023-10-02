@@ -13,6 +13,7 @@ import { checkIfLoginTryIsValid } from '../../../utils/checkIfLoginTryIsValid'
 import { useAuthContext } from '../../../context/authContext'
 import { api } from '../../../services/api'
 import { UNAUTHENTICATED } from '../../../constants/unauthenticated'
+import { PrimaryButton } from '../../Home/styled/home'
 
 export function Login () {
   const { setAuthToken } = useAuthContext()
@@ -60,7 +61,9 @@ export function Login () {
         <UnathenticatedOption>
           <Title>Ou</Title>
 
-          <SecondaryButton title='Entrar sem login' onClick={loginWithoutAuthentication} />
+          <PrimaryButton onClick={loginWithoutAuthentication} >
+            Entrar sem login
+          </PrimaryButton>
         </UnathenticatedOption>
         
       </FormBox>

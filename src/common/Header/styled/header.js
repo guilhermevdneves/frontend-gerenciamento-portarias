@@ -31,3 +31,11 @@ export const Title = styled.h1`
   font-size: 28px;
   color: #fff
 `
+
+export const LogOutButton = styled.button`
+  background-color: transparent;
+  border: 0;
+  font-weight: 500;
+  font-size: 16px;
+  color: #fff
+`
