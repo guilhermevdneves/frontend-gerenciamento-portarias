@@ -27,6 +27,7 @@ import { ErrorBanner } from '../../ErrorBanner/components/ErrorBanner';
 import { dateMask } from '../../../utils/dateMask';
 import { isDateValid } from '../../../utils/isDateValid';
 import { convertDateMaskToDate } from '../../../utils/covertDateMaskToDate';
+import { tiposDeAlteracoesPortaria } from '../../../constants/tiposDeAlteracoesPortaria';
 
 export function PortariasModal({
   title,
@@ -140,6 +141,8 @@ export function PortariasModal({
       servidores: servidores.map(servidor => ({ nome: servidor, presidente: false})),
       alteracoes,
     }
+
+   
     
     try {
       await api.post(
@@ -149,7 +152,19 @@ export function PortariasModal({
           headers: { Authorization: authToken.token }
         }
       )
+
+
+      alteracoes.map(async alteracao => {
+        const {idPortaria: idPortariaAlterada, situacao} = alteracao;
       
+        await api.put(
+          `/portarias/${idPortariaAlterada}`,
+          { situacao: tiposDeAlteracoesPortaria[situacao]  },
+          {
+            headers: { Authorization: authToken.token }
+          }
+        )
+      })
       await fetchData();
     } catch(e) {
       alert("Erro! Tente novamente mais tarde")
@@ -192,7 +207,7 @@ export function PortariasModal({
 
             <InputDescription>Data da publicação *</InputDescription>
             <Input
-              onBlur={ e => checkIfDateIsValid(e.target.value, 'publicacao')}
+              onBlur={ e => validade.length && checkIfDateIsValid(e.target.value, 'publicacao')}
               placeholder='Data da publicação...'
               name='publicacao'
               value={publicacao}
@@ -266,7 +281,7 @@ export function PortariasModal({
               onChange={e => handleChangeValidade(e.target.value)}
             />
 
-            {errors.validade && <ErrorBanner/>}
+            {!!(errors.validade && validade.length) && <ErrorBanner/>}
 
             <InputDescription>Servidores *</InputDescription>
             <IncrementalInput

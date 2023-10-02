@@ -9,11 +9,25 @@ export const Container = styled.header`
   font-weight: 400 !important;
   font-size: 16px !important;
   line-height: 20px !important;
-  padding: 10px 0;
+  padding: 10px 55px;
 `
 
 export const Logo = styled.img.attrs({
   src: logo
-})`
+})``
+
+export const TitleContainer = styled.div`
+  align-items: center;
   margin: auto;
+
+  @media (max-width: 800px) {
+    margin: 0 15px;
+  }
+`
+
+
+export const Title = styled.h1`
+  font-weight: 500;
+  font-size: 28px;
+  color: #fff
 `

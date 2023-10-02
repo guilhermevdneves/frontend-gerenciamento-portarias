@@ -11,15 +11,14 @@ export function Filters ({ handleChangeFilter, fields, cleanFilters }) {
         <PrimaryButton onClick={(e) => cleanFilters(e)}>Limpar Filtros</PrimaryButton>
         {
           fields.map(campo => (
-            <Fragment>
+            <div key={campo.value}>
               <InputLabel>{campo.label}</InputLabel>
               <Input 
-                key={campo.value}
                 name={campo.value}
                 onChange={(e) => handleChangeFilter(campo.value, e.target.value)}
                 value={campo.filterText || ''}
               />
-            </Fragment>
+            </div>
           ))
         }
       </Container>

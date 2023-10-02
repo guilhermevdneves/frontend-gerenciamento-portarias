@@ -28,6 +28,9 @@ export function Home (props) {
 
   const fetchData = async () => {
     const response  = await api.get('/portarias');
+
+    console.log(response.data);
+
     setPortarias(response.data);
     setFilteredPortarias(response.data);
   }
@@ -122,9 +125,7 @@ export function Home (props) {
 
   return (
     <Container>
-      <TitleContainer>
-        <Title>Portal para gerenciamento de portarias</Title>
-      </TitleContainer>
+    
 
       <PortariaContainer>
         <PrimaryButton onClick={criarNovaPortaria}>

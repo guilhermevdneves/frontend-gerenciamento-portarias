@@ -25,19 +25,7 @@ export const WarningMessage = styled.p`
 
 `
 
-export const TitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  padding: 95px 0;
 
-  @media (max-width: 800px) {
-    margin: 0 15px;
-  }
-`
 export const GartnerBanner = styled.div`
   display: flex;
   text-align: center;
@@ -55,12 +43,6 @@ export const Description = styled.div`
   color: ${({ theme }) => theme.colors.grey};
 `
 
-export const Title = styled.h1`
-  margin-top: 15px;
-  font-weight: 800;
-  font-size: 34px;
-  color: ${({ theme }) => theme.colors.primary};
-`
 export const PortariaContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
