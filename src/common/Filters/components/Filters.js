@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Container, Input, FiltersTitle, InputLabel } from '../styled/filters'
 import { PrimaryButton } from '../../../routes/Home/styled/home'
 
@@ -13,7 +13,7 @@ export function Filters ({ handleChangeFilter, fields, cleanFilters }) {
           fields.map(campo => (
             <div key={campo.value}>
               <InputLabel>{campo.label}</InputLabel>
-              <Input 
+              <Input
                 name={campo.value}
                 onChange={(e) => handleChangeFilter(campo.value, e.target.value)}
                 value={campo.filterText || ''}

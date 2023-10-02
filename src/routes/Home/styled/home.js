@@ -8,7 +8,7 @@ export const Test = styled.div`
   display: flex;
 `
 export const Portarias = styled.div`
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   align-items: center;
   width: 100%;

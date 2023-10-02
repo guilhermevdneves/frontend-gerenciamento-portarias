@@ -138,10 +138,22 @@ export function PortariasModal({
       validade: convertDateMaskToDate(validade),
       permanente,
       situacao,
-      servidores: servidores.map(servidor => ({ nome: servidor, presidente: false})),
+      servidores: servidores.reduce((arr, servidor) => {
+        if(servidor.length){
+          arr.push({ nome: servidor, presidente: false})
+        }
+        return arr; 
+      }, []),
       alteracoes: [],
     }
     
+    const portariasToBeChanged = alteracoes.reduce((arr, portaria) => {
+      if(portaria.idPortaria){
+        arr.push(portaria)
+      }
+      return arr; 
+    }, []);
+
     try {
       const novaPortaria = await api.post(
         '/portaria',
@@ -150,20 +162,19 @@ export function PortariasModal({
           headers: { Authorization: authToken.token }
         }
       )
-
-      await Promise.all(alteracoes.map(async alteracao => {
+      await Promise.all(portariasToBeChanged.map(async alteracao => {
         const {idPortaria: idPortariaAlterada, situacao} = alteracao;
-      
-        await api.put(
-          `/portarias/${idPortariaAlterada}`,
-          { 
-            situacao: tiposDeAlteracoesPortaria[situacao],
-            alteracoes: {...alteracao, idPortaria: novaPortaria.data.id }
-          },
-          {
-            headers: { Authorization: authToken.token }
-          }
-        )
+        
+          await api.put(
+            `/portarias/${idPortariaAlterada}`,
+            { 
+              situacao: tiposDeAlteracoesPortaria[situacao],
+              alteracoes: {...alteracao, idPortaria: novaPortaria.data.id }
+            },
+            {
+              headers: { Authorization: authToken.token }
+            }
+          )
       }))
 
       await fetchData();
@@ -306,12 +317,13 @@ export function PortariasModal({
 
           <SecondaryButton 
             disabled={
-              Object.values(errors).some(error => error === true) ||
               !assunto.length ||
-              !publicacao.length ||
+              (!publicacao.length || errors.publicacao) ||
               !servidores.length ||
               !classificacao.length ||
-              !linkPortaria.length
+              !linkPortaria.length ||
+              (errors.link && linkPortaria.length) ||
+              (errors.validade && validade.length)
             } 
             onClick={handleSave}
             title={buttonName}

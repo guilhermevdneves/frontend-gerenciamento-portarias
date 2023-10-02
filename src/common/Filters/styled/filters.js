@@ -25,7 +25,6 @@ export const Input = styled.input`
   border-radius: 5px;
   font-size: 16px;
   outline: none;
-  margin: 0 15px;
 
   &:disabled {
     color: rgb(128, 128, 128) !important;
@@ -38,7 +37,8 @@ export const FiltersTitle = styled.h1`
   margin-bottom: 25px;
 `;
 
-export const InputLabel = styled.label`
+export const InputLabel = styled.p`
   font-size: 16px;
-  margin-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 5px;
 `;
