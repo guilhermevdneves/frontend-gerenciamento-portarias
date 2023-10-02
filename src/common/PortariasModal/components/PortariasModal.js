@@ -139,13 +139,11 @@ export function PortariasModal({
       permanente,
       situacao,
       servidores: servidores.map(servidor => ({ nome: servidor, presidente: false})),
-      alteracoes,
+      alteracoes: [],
     }
-
-   
     
     try {
-      await api.post(
+      const novaPortaria = await api.post(
         '/portaria',
         payload,
         {
@@ -153,18 +151,21 @@ export function PortariasModal({
         }
       )
 
-
-      alteracoes.map(async alteracao => {
+      await Promise.all(alteracoes.map(async alteracao => {
         const {idPortaria: idPortariaAlterada, situacao} = alteracao;
       
         await api.put(
           `/portarias/${idPortariaAlterada}`,
-          { situacao: tiposDeAlteracoesPortaria[situacao]  },
+          { 
+            situacao: tiposDeAlteracoesPortaria[situacao],
+            alteracoes: {...alteracao, idPortaria: novaPortaria.data.id }
+          },
           {
             headers: { Authorization: authToken.token }
           }
         )
-      })
+      }))
+
       await fetchData();
     } catch(e) {
       alert("Erro! Tente novamente mais tarde")

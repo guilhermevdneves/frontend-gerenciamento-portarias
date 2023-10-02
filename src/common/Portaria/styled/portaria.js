@@ -8,6 +8,7 @@ export const Container = styled.section`
   border-radius: 8px;
   background-color: #FAFAF5;
   width: 100%;
+  
 `
 export const Title = styled.h1`
   font-size: 18px;

@@ -12,6 +12,10 @@ export const Portarias = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 70vh;
+  box-sizing: border-box;
   
   > section {
     margin-bottom: 25px; /* Ajuste o valor conforme necessário */
@@ -22,7 +26,6 @@ export const WarningMessage = styled.p`
  color: ${({ theme }) => theme.colors.primary};
  font-size: 24px;
  font-weight: bold;
-
 `
 
 
