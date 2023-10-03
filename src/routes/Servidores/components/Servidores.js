@@ -6,25 +6,29 @@ import {
   NoContacts,
   NoContactsText,
   BackButton,
-  ContactsContainer
+  ServidoresContainer
 } from '../styled/servidores'
 import { SecondaryButton } from '../../../common/SecondaryButton/components/SecondaryButton'
-import { ContactCard } from '../../../common/ContactCard/components/ContactCard'
+import { ServidorCard } from '../../../common/ContactCard/components/ServidorCard'
 import { api } from '../../../services/api'
-import { isContactValid } from '../../../utils/checkIfContactIsValid'
+import { isServidorValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'
+import { ServidoresModal } from '../../../common/ServidoresModal/components/ServidoresModal'
 
 export function Servidores () {
-  const [contacts, setContacts] = useState([])
+  const [servidores, setServidores] = useState([])
+  const [openModal, setOpenModal] = useState(false);
   const { authToken } = useAuthContext()
 
-  const handleFetchContacts = async () => {
+  const handleFetchServidores = async () => {
     try {
-      const response = await api.get('/contacts', {
-        headers: { Authorization: authToken }
+      const response = await api.get('/users', {
+        headers: { Authorization: authToken.token }
       })
 
-      setContacts(response.data)
+      console.log(response);
+
+      setServidores(response.data)
     } catch (err) {
       alert('Error!')
     }
@@ -34,29 +38,29 @@ export function Servidores () {
     try {
       e.preventDefault()
       const name = e.target[0].value
-      const number = e.target[1].value
+      const email = e.target[1].value
 
       const newContact = {
-        number,
+        email,
         name
       }
-      console.log(isContactValid(newContact))
+      console.log(isServidorValid(newContact))
 
-      if (isContactValid(newContact)) {
+      if (isServidorValid(newContact)) {
         await api.post(
-          '/contacts',
+          '/user',
           {
             name,
-            number
+            email
           },
           {
-            headers: { Authorization: authToken }
+            headers: { Authorization: authToken.token }
           }
         )
 
-        handleFetchContacts()
+        handleFetchServidores()
       } else {
-        alert('contact is invalid!')
+        alert('Os dados estão inválidos!')
       }
     } catch (err) {
       console.log('err', err)
@@ -64,7 +68,7 @@ export function Servidores () {
   }
 
   useEffect(() => {
-    handleFetchContacts()
+    handleFetchServidores()
   }, [])
 
   return (
@@ -74,28 +78,38 @@ export function Servidores () {
         <BackButton>Voltar</BackButton>
       </TitleContainer>
 
-      {!contacts.length ? (
+      {!servidores.length ? (
         <NoContacts>
           <NoContactsText>Não há servidores cadastrados</NoContactsText>
           <SecondaryButton
+            onClick={() => setOpenModal(true)}
             title='Adicionar Servidor'
           />
         </NoContacts>
       ) : (
-        <ContactsContainer>
+        <ServidoresContainer>
           <SecondaryButton
             title='Adicionar Servidor'
+            onClick={() => setOpenModal(true)}
           />
-          {contacts.map(contact => (
-            <ContactCard
-              handleFetchContacts={handleFetchContacts}
+          {servidores.map(contact => (
+            <ServidorCard
+              handleFetchContacts={handleFetchServidores}
               contact={contact}
               key={contact.id}
             />
           ))}
-        </ContactsContainer>
+        </ServidoresContainer>
       )}
 
+      { openModal &&
+        <ServidoresModal
+          title="Adicionar servidor"
+          onClose={() => setOpenModal(false)}
+          onSubmit={handleAddContact}
+          buttonName="Adicionars"
+        />
+      }
     </Container>
   )
 }

@@ -35,7 +35,7 @@ export const NoContactsText = styled.p`
   margin-bottom: 15px;
 `
 
-export const ContactsContainer = styled.div`
+export const ServidoresContainer = styled.div`
   margin-top: 45px;
   display: flex;
   flex-direction: column;

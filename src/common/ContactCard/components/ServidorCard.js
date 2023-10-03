@@ -11,16 +11,17 @@ import {
   Option,
   OptionsDots,
   ContactEmail
-} from '../styled/contactCard'
+} from '../styled/servidorCard'
 import ClickAwayListener from 'react-click-away-listener'
 import { PortariasModal } from '../../PortariasModal/components/PortariasModal'
-import { isContactValid } from '../../../utils/checkIfContactIsValid'
+import { isServidorValid } from '../../../utils/checkIfContactIsValid'
 import { useAuthContext } from '../../../context/authContext'
 import { useParams } from 'react-router-dom'
-import { deleteContact, editContact } from '../../../services/contacts'
+import { deleteContact, editServidor } from '../../../services/contacts'
 import { formatContactFromEvent } from '../../../utils/formatContactFromEvent'
+import { ServidoresModal } from '../../ServidoresModal/components/ServidoresModal'
 
-export function ContactCard({ contact, handleFetchContacts }) {
+export function ServidorCard({ contact, handleFetchContacts }) {
   const [showOptions, setShowOptions] = useState(false)
   const [openEditContactModal, setOpenEditContactModal] = useState(false)
   const { authToken } = useAuthContext()
@@ -30,7 +31,7 @@ export function ContactCard({ contact, handleFetchContacts }) {
     try {
       const id = contact.id
 
-      await deleteContact(authToken, selectedNumber, id);
+      await deleteContact(authToken, id);
 
       handleFetchContacts()
     } catch (err) {
@@ -45,10 +46,10 @@ export function ContactCard({ contact, handleFetchContacts }) {
 
       const newContact = formatContactFromEvent(e, id);
 
-      const isValid = await isContactValid(newContact);
+      const isValid = await isServidorValid(newContact);
 
       if (!isValid.errorMessage) {
-        await editContact(authToken, selectedNumber, newContact);
+        await editServidor(authToken, selectedNumber, newContact);
 
         handleFetchContacts()
         setOpenEditContactModal(false)
@@ -97,9 +98,9 @@ export function ContactCard({ contact, handleFetchContacts }) {
       )}
 
       {openEditContactModal && (
-        <PortariasModal
+        <ServidoresModal
           initialName={contact.name ?? ''}
-          initialNumber={contact.number ?? ''}
+          initialEmail={contact.email ?? ''}
           onSubmit={e => handleEdit(e)}
           onClose={() => setOpenEditContactModal(false)}
           title='Edit contact'

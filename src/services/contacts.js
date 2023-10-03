@@ -1,10 +1,10 @@
 import { api } from "./api"
 
-const baseUrl = (number) => `/numbers/${number}/contacts`
+const baseUrl = (servidorId) => `/user/${servidorId}`
 
 
-export const getContacts = async (user, number) => {
-  const url = baseUrl(number)
+export const getServidores = async (user) => {
+  const url = '/users'
 
   return await api.get(url, {
     headers: { Authorization: user.token }
@@ -12,21 +12,20 @@ export const getContacts = async (user, number) => {
 }
 
 
-export const addContact = async (user, number, contact) => {
-  const url = baseUrl(number);
+export const addServidor = async (user, servidor) => {
+  const url = '/user';
 
   return await api.post(
     url,
-    contact,
+    servidor,
     {
       headers: { Authorization: user.token }
     }
   )
 }
 
-export const editContact = async (user, number, contact) => {
-  const defaultUrl = baseUrl(number);
-  const url = `${defaultUrl}/${contact.id}`
+export const editServidor = async (user, servidorId, contact) => {
+  const url = baseUrl(servidorId);
 
   return await api.put(
     url,
@@ -38,9 +37,8 @@ export const editContact = async (user, number, contact) => {
 }
 
 
-export const deleteContact = async (user, number, contactId) => {
-  const defaultUrl = baseUrl(number);
-  const url = `${defaultUrl}/${contactId}`
+export const deleteContact = async (user, servidorId) => {
+  const url = baseUrl(servidorId);
 
   return await api.delete(url, { headers: { Authorization: user.token }})
 }
