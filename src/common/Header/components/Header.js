@@ -15,13 +15,14 @@ export function Header () {
         <Title>Portal para gerenciamento de portarias</Title>
       </TitleContainer>
 
-      {isUserLogged &&
-        <LogOutButton
-          onClick={() => auth.setAuthToken(null)}
-        >
-          Sair
-        </LogOutButton>
-      }
+        {auth.authToken &&
+          <LogOutButton
+            onClick={() => auth.setAuthToken(null)}
+          >
+            {isUserLogged ? 'Sair' :  'Entrar' }
+          </LogOutButton>
+        }
+        
     </Container>
   )
 }
