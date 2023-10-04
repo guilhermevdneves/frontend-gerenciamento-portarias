@@ -115,7 +115,7 @@ export function Home (props) {
       return filtro;
     })); 
     
-    setFilteredPortarias([]); // Você pode manter este estado se quiser limpar os resultados filtrados
+    setFilteredPortarias([]);
   }
 
   useEffect(() => {
@@ -151,6 +151,7 @@ export function Home (props) {
               <Fragment>
                 {portarias.map(portaria => 
                   <Portaria
+                    fetchData={fetchData}
                     portarias={portarias}
                     key={portaria.id}
                     dadosPortaria={portaria}
@@ -165,6 +166,7 @@ export function Home (props) {
               <Fragment>
                 {fiteredPortarias.map(portaria => 
                   <Portaria
+                    fetchData={fetchData}
                     portarias={portarias}
                     key={portaria.id}
                     dadosPortaria={portaria}

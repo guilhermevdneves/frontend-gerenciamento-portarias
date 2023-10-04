@@ -29,21 +29,47 @@ import { isDateValid } from '../../../utils/isDateValid';
 import { convertDateMaskToDate } from '../../../utils/covertDateMaskToDate';
 import { tiposDeAlteracoesPortaria } from '../../../constants/tiposDeAlteracoesPortaria';
 
+
+const formatarServidoresParaOModal = (servidores) => {
+  return servidores.map(servidor => servidor.nome)
+}
+
+const formatarAlteracosParaOModal = (alteracoes, portarias) => {
+  return alteracoes.map(alteracao => {
+    
+    const portaria = portarias.find(portaria => portaria.id === alteracao.idPortaria)
+
+    return {
+      situacao: alteracao.situacao,
+      portaria: `${portaria.numero}/${new Date(portaria.publicacao).getFullYear()}`
+    }
+  })
+}
+
+function getDefault(value, defaultValue) {
+  return value !== undefined ? value : defaultValue;
+}
 export function PortariasModal({
   title,
   onClose,
   buttonName,
-  fetchData
+  fetchData,
+  portariaInicial = null ,
+  portarias = [],
 }) {
-  const [assunto, setAssunto] = useState('');
-  const [publicacao, setPublicacao] = useState('');
-  const [validade, setValidade] = useState('');
-  const [classificacao, setClassificacao] = useState(classificacaoPortaria[0].value);
-  const [servidores, setServidores] = useState(['']);
-  const [permanente, setPermanente] = useState(false);
-  const [situacao, setSituacao] = useState(situacaoPortariaInput[0].value);
-  const [linkPortaria, setLinkPortaria] = useState('');
-  const [alteracoes, setAlteracoes] = useState([]);
+  const [assunto, setAssunto] = useState(getDefault(portariaInicial?.assunto, ''));
+  const [publicacao, setPublicacao] = useState(dateMask(getDefault(portariaInicial?.publicacao, '')));
+  const [validade, setValidade] = useState(dateMask(getDefault(portariaInicial?.validade, '')));
+  const [classificacao, setClassificacao] = useState(getDefault(portariaInicial?.classificacao, classificacaoPortaria[0].value));
+  const [servidores, setServidores] = useState(
+    getDefault(portariaInicial?.servidores, [''])
+  );
+  const [permanente, setPermanente] = useState(getDefault(portariaInicial?.permanente, false));
+  const [situacao, setSituacao] = useState(getDefault(portariaInicial?.situacao, situacaoPortariaInput[0].value));
+  const [linkPortaria, setLinkPortaria] = useState(getDefault(portariaInicial?.link, ''));
+  const [alteracoes, setAlteracoes] = useState(
+    (portariaInicial && portariaInicial.alteracoes) ? formatarAlteracosParaOModal(portariaInicial.alteracoes, portarias) : []
+  );
   const [errors, setErrors] = useState(false);
   const { authToken } = useAuthContext()
   
@@ -129,16 +155,75 @@ export function PortariasModal({
     }
   }
 
+  const handleEdit = async () => {
+    const payload = {
+      assunto,
+      publicacao: convertDateMaskToDate(publicacao),
+      link: linkPortaria,
+      classificacao,
+      validade: validade ? convertDateMaskToDate(validade): undefined,
+      permanente,
+      situacao,
+      servidores: servidores.reduce((arr, servidor) => {
+        if(servidor.length){
+          arr.push({ nome: servidor, presidente: false})
+        }
+        return arr; 
+      }, []),
+      alteracoes: [],
+    }
+
+    const portariasToBeChanged = alteracoes.reduce((arr, portaria) => {
+      if(portaria.idPortaria){
+        arr.push(portaria)
+      }
+      return arr; 
+    }, []);
+
+    try {
+      await api.put(
+        `/portarias/${portariaInicial.id}`,
+        payload,
+        {
+          headers: { Authorization: authToken.token }
+        }
+      )
+
+      await Promise.all(portariasToBeChanged.map(async alteracao => {
+        const {idPortaria: idPortariaAlterada, situacao} = alteracao;
+        
+          await api.put(
+            `/portarias/${idPortariaAlterada}`,
+            { 
+              situacao: tiposDeAlteracoesPortaria[situacao],
+              alteracoes: {...alteracao, idPortaria: portariaInicial.id }
+            },
+            {
+              headers: { Authorization: authToken.token }
+            }
+          )
+      }))
+
+      await fetchData();
+    } catch(e) {
+      alert("Erro! Tente novamente mais tarde")
+    }
+    
+    onClose();
+  }
+
+
+
   const handleSave = async () => {
     const payload = {
       assunto,
       publicacao: convertDateMaskToDate(publicacao),
       link: linkPortaria,
       classificacao,
-      validade: convertDateMaskToDate(validade),
+      validade: validade ? convertDateMaskToDate(validade): undefined,
       permanente,
       situacao,
-      servidores: servidores.reduce((arr, servidor) => {
+      servidores: servidores.reduce((arr, servidor) => {      
         if(servidor.length){
           arr.push({ nome: servidor, presidente: false})
         }
@@ -198,7 +283,7 @@ export function PortariasModal({
       })) 
     }
   }
-
+  console.log(servidores);
   return (
     <Container>
       <Modal>
@@ -295,7 +380,7 @@ export function PortariasModal({
 
             {!!(errors.validade && validade.length) && <ErrorBanner/>}
 
-            <InputDescription>Servidores *</InputDescription>
+            <InputDescription>Servidores</InputDescription>
             <IncrementalInput
               setAnSpecificInput={setAnSpecificServidor}
               name="servidores"
@@ -306,6 +391,7 @@ export function PortariasModal({
 
            <InputDescription>Alterações</InputDescription>
            <IncrementalDropdown
+              editing={!!portariaInicial}
               options={alteracoesPortarias}
               setAnSpecificInput={setAnSpecificAlteracao}
               name="alteracoes"
@@ -319,13 +405,12 @@ export function PortariasModal({
             disabled={
               !assunto.length ||
               (!publicacao.length || errors.publicacao) ||
-              !servidores.length ||
               !classificacao.length ||
               !linkPortaria.length ||
               (errors.link && linkPortaria.length) ||
               (errors.validade && validade.length)
             } 
-            onClick={handleSave}
+            onClick={portariaInicial ? handleEdit : handleSave}
             title={buttonName}
           />
       </Modal>
