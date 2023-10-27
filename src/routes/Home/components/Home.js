@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { isSameDay } from 'date-fns';
+import MediaQuery from 'react-responsive';
 import {
   Container,
   PortariaContainer,
@@ -19,6 +20,7 @@ import { isDateValid } from '../../../utils/isDateValid';
 import { convertDateMaskToDate } from '../../../utils/covertDateMaskToDate';
 import { useAuthContext } from '../../../context/authContext';
 import { isUserLoggedIn } from '../../../utils/isUserLoggedIn';
+import { Drawer } from '../../../common/Drawer/components/Drawer';
 
 export function Home (props) {
   const [portarias, setPortarias] = useState([]);
@@ -26,7 +28,7 @@ export function Home (props) {
   const [openAddContactModal, setOpenAddContactModal] = useState(false)
   const [fields, setFields] = useState(camposFiltros);
   const authContext = useAuthContext()
-  const isUserLogged = isUserLoggedIn(authContext)
+  const isUserLogged = isUserLoggedIn(authContext);
   
   const fetchData = async () => {
     const response  = await api.get('/portarias');
@@ -126,25 +128,32 @@ export function Home (props) {
     <Container>
       <PortariaContainer>
         {isUserLogged &&
-          <Fragment>
           <PrimaryButton onClick={criarNovaPortaria}>
             + Portaria
           </PrimaryButton>
-        
-          <Link to={'/servidores'}>
-            <PrimaryButton>
-              Adicionar servidores
-            </PrimaryButton>
-          </Link>
-          </Fragment>
         }
+        
+        <MediaQuery maxWidth={949}>
+          <Drawer>
+            <Filters
+               white
+              flexible
+              cleanFilters={cleanFilters}
+              fields={fields}
+              handleChangeFilter={handleChangeFilter}
+            />
+          </Drawer>
+        </MediaQuery>
+
 
         <Test>
-          <Filters 
-            cleanFilters={cleanFilters}
-            fields={fields}
-            handleChangeFilter={handleChangeFilter}
-          />
+          <MediaQuery minWidth={950}>
+            <Filters 
+              cleanFilters={cleanFilters}
+              fields={fields}
+              handleChangeFilter={handleChangeFilter}
+            />
+          </MediaQuery>
           
           <Portarias>
             {(!fiteredPortarias.length && !fields.some(field => field.filterText && field.filterText.length)) ?

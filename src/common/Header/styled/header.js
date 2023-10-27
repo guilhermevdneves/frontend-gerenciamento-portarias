@@ -10,6 +10,10 @@ export const Container = styled.header`
   font-size: 16px !important;
   line-height: 20px !important;
   padding: 10px 55px;
+
+  @media screen and (max-width: 950px) {
+    justify-content: space-between;
+  }
 `
 
 export const Logo = styled.img.attrs({

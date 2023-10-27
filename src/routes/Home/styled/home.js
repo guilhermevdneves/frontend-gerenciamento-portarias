@@ -6,6 +6,10 @@ export const Container = styled.div`
 `
 export const Test = styled.div`
   display: flex;
+  
+  > :first-child {
+    margin-right: 15px;
+  }
 `
 export const Portarias = styled.div`
   display: inline-block;
@@ -53,7 +57,7 @@ export const PortariaContainer = styled.div`
   grid-row-gap: 25px;
   margin: auto;
   margin-top: 40px;
-  max-width: 80%;
+  max-width: 90%;
 
   @media (max-width: 768px) {
     max-width: 100%;
