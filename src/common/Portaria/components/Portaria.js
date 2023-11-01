@@ -24,14 +24,9 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { api } from '../../../services/api';
 import { useAuthContext } from '../../../context/authContext';
 import { isUserLoggedIn } from '../../../utils/isUserLoggedIn';
+import { formatDateToDDMMYYYY } from '../../../utils/formateDateToDDMMYYYY';
 
-function formatDateToDDMMYYYY(date) {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Os meses começam em 0 (janeiro é 0)
-  const year = date.getFullYear();
 
-  return `${day}/${month}/${year}`;
-}
 
 export function Portaria({ dadosPortaria, portarias, fetchData }) {
   const [editarPortaria, setEditarPortaria ] = useState(false);

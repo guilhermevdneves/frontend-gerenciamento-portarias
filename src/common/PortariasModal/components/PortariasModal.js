@@ -28,6 +28,7 @@ import { dateMask } from '../../../utils/dateMask';
 import { isDateValid } from '../../../utils/isDateValid';
 import { convertDateMaskToDate } from '../../../utils/covertDateMaskToDate';
 import { tiposDeAlteracoesPortaria } from '../../../constants/tiposDeAlteracoesPortaria';
+import { formatDateToDDMMYYYY } from '../../../utils/formateDateToDDMMYYYY';
 
 
 const formatarServidoresParaOModal = (servidores) => {
@@ -58,8 +59,16 @@ export function PortariasModal({
   portarias = [],
 }) {
   const [assunto, setAssunto] = useState(getDefault(portariaInicial?.assunto, ''));
-  const [publicacao, setPublicacao] = useState(dateMask(getDefault(portariaInicial?.publicacao, '')));
-  const [validade, setValidade] = useState(dateMask(getDefault(portariaInicial?.validade, '')));
+  const [publicacao, setPublicacao] = useState(() => {
+      const defaultValue = getDefault(portariaInicial?.publicacao, '');
+
+      return defaultValue ? formatDateToDDMMYYYY(new Date(defaultValue)) : '' 
+  });
+  const [validade, setValidade] = useState( () => {
+    const defaultValue = getDefault(portariaInicial?.validade, '');
+
+    return defaultValue ? formatDateToDDMMYYYY(new Date(defaultValue)) : '' 
+  });
   const [classificacao, setClassificacao] = useState(getDefault(portariaInicial?.classificacao, classificacaoPortaria[0].value));
   const [servidores, setServidores] = useState(
     getDefault(portariaInicial?.servidores, [''])
