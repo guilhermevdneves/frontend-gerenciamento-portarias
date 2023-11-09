@@ -8,7 +8,7 @@ export const Container = styled.button`
   padding: 8px 10px;
   min-width: 100px;
   text-decoration: none;
-  font-size: 16px
+  font-size: 16px;
 
   &:hover {
     cursor: ${props => (props.disabled ? 'unset' : 'pointer')};

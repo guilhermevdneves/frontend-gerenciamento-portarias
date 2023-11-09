@@ -17,7 +17,6 @@ export function DropdownWitInput({ value, handleChange, onSelectItem, options })
         value={itemSelected || value}
         disabled={itemSelected}
         onChange={(e) => handleChange(e.target.value)}
-         // Impede a edição direta do input
       />
       {options && !itemSelected && (
         <DropdownList>

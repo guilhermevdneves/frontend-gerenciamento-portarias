@@ -21,7 +21,7 @@ export function IncrementalInput(props) {
       }
  
       {props.inputs.length > 1 &&
-        <Button onClick={(e) => (e) => {
+        <Button onClick={(e) => {
           e.preventDefault()
           props.decrease(e)
         }}>

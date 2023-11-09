@@ -5,16 +5,58 @@ import { Button as AddNewInput } from '../../Button/components/Button';
 import { api } from '../../../services/api';
 import { DropdownWitInput } from '../../DropdownWithInput/components/DropdownWithInput';
 
-export function IncrementalDropdown(props) {
-  const [number, setNumber] = useState('');
-  const [results, setResults] = useState([]);
+const generateArrayOfInputs = (editing = false, inputs) => {
+  let array = []
+  if(!editing) {
+    for(const input of inputs) {
+      array.push('')
+    } 
+  } else {
+    for(const input of inputs) {
+      array.push(input.portaria)
   
-  const checkNumber = async (value) => {
-    setNumber(value);
+    }
+  }
+
+
+  return array;
+}
+
+const generateArrayOfNull = (inputs) => {
+  let array = []
+    for(const input of inputs) {
+      array.push(null)
+    }
+  
+  return array;
+}
+
+
+export function IncrementalDropdown(props) {
+  const [numbers, setNumbers] = useState(generateArrayOfInputs(props.editing, props.inputs));
+  const [results, setResults] = useState(generateArrayOfNull(props.inputs));
+  
+  const checkNumber = async (value, index) => {
+    setNumbers((prevState) => {
+      const newArray = [...prevState];
+
+      newArray[index] = value;
+
+      return newArray;
+    });
+
+
     const response = await api.get(`/portarias?numero=${value}`);
 
-    setResults(response.data)
+    setResults((prevState) => {
+      const newArray = [...prevState];
+
+      newArray[index] = response.data;
+
+      return newArray;
+    })
   }
+
 
   return ( 
     <Container>
@@ -28,9 +70,9 @@ export function IncrementalDropdown(props) {
             />
             <InputAndResults>
               <DropdownWitInput
-                value={number}
-                handleChange={checkNumber}
-                options={results}
+                value={numbers[index]}
+                handleChange={(e) => checkNumber(e, index)}
+                options={results[index]}
                 onSelectItem={(idPortaria) => props.setAnSpecificInput({ idPortaria }, index)}
               />
             </InputAndResults>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const Container = styled.section`
   display: grid;
-  grid-template-columns: 1fr 10fr 0.3fr;
+  grid-template-columns: 1fr 10fr 0.6fr;
   border: 2px solid ${({ theme }) => theme.colors.lightGrey};
   border-radius: 8px;
   background-color: #FAFAF5;
@@ -12,8 +12,8 @@ export const Container = styled.section`
 `
 export const Title = styled.h1`
   font-size: 18px;
-  margin-bottom: 15px;
   font-weight: bold;
+  margin-right: 15px;
 `
 
 export const ConteudoTexto = styled.p`
@@ -61,4 +61,50 @@ export const ContainerPortaria = styled.div`
 `
 
 export const ContainerTitulo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+
 `
+export const EditarPortaria = styled.button`
+
+  background-color: transparent;
+  border: 0;
+  color: dodgerblue;
+  
+  &:hover {
+    cursor: ${props => (props.disabled ? 'unset' : 'pointer')};
+  }
+`
+
+
+export const Icons = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  path {
+    color: white !important;
+  }
+
+  svg {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+
+  &:hover {
+    cursor: ${props => (props.disabled ? 'unset' : 'pointer')};
+  }
+`
+export const IconButton = styled.button`
+  background-color: transparent;
+  border: 0;
+
+   &:hover {
+    cursor: ${props => (props.disabled ? 'unset' : 'pointer')};
+  }
+`
+
