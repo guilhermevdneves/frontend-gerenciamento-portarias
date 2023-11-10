@@ -18,6 +18,7 @@ export function Filters ({ handleChangeFilter, fields, cleanFilters, flexible = 
                 name={campo.value}
                 onChange={(e) => handleChangeFilter(campo.value, e.target.value)}
                 value={campo.filterText || ''}
+                placeholder={campo.placeholder}
               />
             </div>
           ))

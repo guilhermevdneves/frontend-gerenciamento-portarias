@@ -37,12 +37,12 @@ const formatarServidoresParaOModal = (servidores) => {
 
 const formatarAlteracosParaOModal = (alteracoes, portarias) => {
   return alteracoes.map(alteracao => {
-    
     const portaria = portarias.find(portaria => portaria.id === alteracao.idPortaria)
 
     return {
       situacao: alteracao.situacao,
-      portaria: `${portaria.numero}/${new Date(portaria.publicacao).getFullYear()}`
+      portaria: `${portaria.numero}/${new Date(portaria.publicacao).getFullYear()}`,
+      idPortaria: alteracao.idPortaria
     }
   })
 }
@@ -71,7 +71,7 @@ export function PortariasModal({
   });
   const [classificacao, setClassificacao] = useState(getDefault(portariaInicial?.classificacao, classificacaoPortaria[0].value));
   const [servidores, setServidores] = useState(
-    getDefault(portariaInicial?.servidores, [''])
+    (portariaInicial && portariaInicial.servidores) ?  formatarServidoresParaOModal(portariaInicial?.servidores) : ['']
   );
   const [permanente, setPermanente] = useState(getDefault(portariaInicial?.permanente, false));
   const [situacao, setSituacao] = useState(getDefault(portariaInicial?.situacao, situacaoPortariaInput[0].value));
@@ -221,8 +221,6 @@ export function PortariasModal({
     onClose();
   }
 
-
-
   const handleSave = async () => {
     const payload = {
       assunto,
@@ -292,7 +290,7 @@ export function PortariasModal({
       })) 
     }
   }
-  console.log(servidores);
+
   return (
     <Container>
       <Modal>

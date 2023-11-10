@@ -71,7 +71,7 @@ export function Portaria({ dadosPortaria, portarias, fetchData }) {
         <ConteudoTexto
           cor={situacaoPortaria[dadosPortaria.situacao].color}
         >
-          {`${situacaoPortaria[dadosPortaria.situacao].texto}`}
+          {`${situacaoPortaria[dadosPortaria.situacao][dadosPortaria.alteracoes.length ? 'texto' : 'textoNone' ]}`}
           {
             dadosPortaria
               .alteracoes

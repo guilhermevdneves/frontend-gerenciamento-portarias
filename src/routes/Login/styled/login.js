@@ -49,7 +49,6 @@ export const UnathenticatedOption = styled.div`
 `
 
 export const Input = styled.input.attrs(props => ({
-  type: 'text',
   placeholder: props.placeholder
 }))`
   border: 1px solid ${({ theme }) => theme.colors.lightGrey};

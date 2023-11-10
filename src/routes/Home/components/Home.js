@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { isSameDay } from 'date-fns';
 import MediaQuery from 'react-responsive';
+import debounce from 'lodash.debounce';
 import {
   Container,
   PortariaContainer,
@@ -121,7 +122,13 @@ export function Home (props) {
   }
 
   useEffect(() => {
-    buscarPorFiltros();
+    const debouncedFunction = debounce(buscarPorFiltros, 600)
+
+    debouncedFunction();
+
+    return () => {
+      debouncedFunction.cancel();
+    }
   }, [fields])
 
   return (

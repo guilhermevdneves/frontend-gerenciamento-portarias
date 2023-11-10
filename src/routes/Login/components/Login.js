@@ -52,7 +52,7 @@ export function Login () {
           <InputContainer>
             <Input placeholder='Login' name='login' />
 
-            <Input placeholder='Senha' name='password' />
+            <Input placeholder='Senha' name='password'  type="password" />
           </InputContainer>
 
           <SecondaryButton title='Logar' />

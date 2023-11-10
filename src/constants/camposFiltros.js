@@ -2,32 +2,39 @@ export const camposFiltros = [
   {
       value: 'numero',
       label: 'Número',
-      type: 'string'
+      type: 'string',
+      placeholder:'Ex: CPV.001/2023'
   },
   {
       value: 'assunto',
       label: 'Assunto',
-      type: 'string'
+      type: 'string',
+      placeholder:'Titulo da portaria'
+      
   },
   {
       value: 'situacao',
       label: 'Situação',
-      type: 'string'
+      type: 'string',
+      placeholder:'Ex: Revogada'
   },
   {
       value: 'publicacao',
       label: 'Publicação',
-      type: 'date'
+      type: 'date',
+      placeholder:'Ex: 01/01/2023'
   },
   {
       value: 'validade',
       label: 'Validade',
-      type: 'date'
+      type: 'date',
+      placeholder:'Ex: 01/01/2023'
   },
   {
       value: 'servidores',
       label: 'Servidores',
-      type: 'servidores'
+      type: 'servidores',
+      placeholder: 'Ex: João da Silva'
   }
 ]
 

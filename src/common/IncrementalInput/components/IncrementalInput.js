@@ -3,6 +3,7 @@ import { Button, AddButton, RemoveButton, Container } from '../styled/incrementa
 import { Input } from '../../PortariasModal/styled/portariasModal'
 
 export function IncrementalInput(props) {
+console.log( props.inputs)
   const inputWithButtons = (input, index) => (
     <div>
       <Input
@@ -10,7 +11,6 @@ export function IncrementalInput(props) {
         value={input}
         onChange={e => props.setAnSpecificInput(e.target.value, index)}
       /> 
-
       {!!input.length &&
         <Button onClick={(e) => {
           e.preventDefault()
@@ -35,10 +35,9 @@ export function IncrementalInput(props) {
   return ( 
     <Container >
       {props.inputs.map((input, index) => (
-        <Fragment>
+        <Fragment key={`input-${props.name}`}>
           {(props.inputs.length - 1) !== index ?
               <Input
-                key={`input-${props.name}`}
                 value={input}
                 name={props.name}
                 onChange={e => props.setAnSpecificInput(e.target.value, index)}
