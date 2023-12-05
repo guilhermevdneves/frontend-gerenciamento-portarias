@@ -66,8 +66,8 @@ export function PortariasModal({
   });
   const [validade, setValidade] = useState( () => {
     const defaultValue = getDefault(portariaInicial?.validade, '');
-
-    return defaultValue ? formatDateToDDMMYYYY(new Date(defaultValue)) : '' 
+    const formatedDate = formatDateToDDMMYYYY(new Date(defaultValue));
+    return (defaultValue && !isNaN(formatedDate)) ? formatedDate  : '' 
   });
   const [classificacao, setClassificacao] = useState(getDefault(portariaInicial?.classificacao, classificacaoPortaria[0].value));
   const [servidores, setServidores] = useState(
