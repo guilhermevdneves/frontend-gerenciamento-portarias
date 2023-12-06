@@ -60,7 +60,6 @@ export const PortariaContainer = styled.div`
   max-width: 90%;
 
   @media (max-width: 768px) {
-    max-width: 100%;
     grid-template-columns: repeat(1, 1fr);
   }
 `
